@@ -21,9 +21,10 @@ import androidx.navigation.compose.rememberNavController
 import com.emirkaya.movieapp.presentation.navigation.BottomNavItem
 import com.emirkaya.movieapp.presentation.navigation.BottomNavigationBar
 import com.emirkaya.movieapp.presentation.navigation.NavGraph
-import com.emirkaya.movieapp.presentation.navigation.Routes
 import com.emirkaya.movieapp.presentation.ui.theme.MovieAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +37,8 @@ class MainActivity : ComponentActivity() {
                     BottomNavigationBar(
                         navController = navController,
                         items = listOf(
-                            BottomNavItem(Routes.MOVIES, R.drawable.ic_movies, "Movies"),
-                            BottomNavItem(Routes.ACTORS, R.drawable.ic_actors, "Actors")
+                            BottomNavItem(Constants.MOVIES, R.drawable.ic_movies, "Movies"),
+                            BottomNavItem(Constants.ACTORS, R.drawable.ic_actors, "Actors")
                         )
                     )
                 }
