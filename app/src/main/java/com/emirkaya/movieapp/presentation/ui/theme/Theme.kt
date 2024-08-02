@@ -1,4 +1,4 @@
-package com.emirkaya.movieapp.ui.theme
+package com.emirkaya.movieapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

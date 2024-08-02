@@ -1,4 +1,4 @@
-package com.emirkaya.movieapp.ui.theme
+package com.emirkaya.movieapp.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
