@@ -36,15 +36,19 @@ class MainActivity : ComponentActivity() {
                     NavGraph(navController = navController, modifier = Modifier.weight(1f))
                     BottomNavigationBar(
                         navController = navController,
-                        items = listOf(
-                            BottomNavItem(Constants.MOVIES, R.drawable.ic_movies, "Movies"),
-                            BottomNavItem(Constants.ACTORS, R.drawable.ic_actors, "Actors")
-                        )
+                        items = BottomNavItems.items
                     )
                 }
             }
         }
     }
+}
+
+object BottomNavItems {
+    val items = listOf(
+        BottomNavItem(Constants.MOVIES, R.drawable.ic_movies, "Movies"),
+        BottomNavItem(Constants.ACTORS, R.drawable.ic_actors, "Actors")
+    )
 }
 
 
