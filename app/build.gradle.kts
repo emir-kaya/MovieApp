@@ -91,6 +91,15 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
 
+    //GLIDE
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    kapt ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.github.skydoves:landscapist-glide:1.5.2")
+
+    implementation ("androidx.paging:paging-compose:3.3.1")
+
+    implementation ("com.google.android.material:material:1.12.0")
+
 
 
 
