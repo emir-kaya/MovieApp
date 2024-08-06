@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="unknown">Unknown</string>
+    <string name="rating">Rating: %1$.1f</string>
+    <string name="date">Date: %1$s</string>
+    <string name="unknown_error">An unknown error occurred</string>
 </resources>
