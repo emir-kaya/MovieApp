@@ -13,10 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.MovieItem
 import com.skydoves.landscapist.glide.GlideImage
 import java.util.Locale
@@ -33,7 +36,7 @@ fun MovieCard(movie: MovieItem) {
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             GlideImage(
-                imageModel = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+                imageModel = "${Constants.BASE_IMG_URL}${movie.posterPath}",
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -42,20 +45,20 @@ fun MovieCard(movie: MovieItem) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = movie.title ?: "Unknown",
+                text = movie.title ?: stringResource(R.string.unknown),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 color = Color.Black
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Rating: ${String.format(Locale.US, "%.1f", movie.voteAverage)}",
+                text = stringResource(R.string.rating, movie.voteAverage),
                 fontSize = 14.sp,
                 color = Color.Gray
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Date: ${movie.releaseDate}",
+                text = stringResource(R.string.date, movie.releaseDate),
                 fontSize = 14.sp,
                 color = Color.Gray
             )
