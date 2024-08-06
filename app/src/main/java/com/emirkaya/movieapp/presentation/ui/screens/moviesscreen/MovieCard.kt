@@ -36,7 +36,7 @@ fun MovieCard(movie: MovieItem) {
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             GlideImage(
-                imageModel = "${Constants.BASE_IMG_URL}${movie.posterPath}",
+                imageModel = buildImageUrl(movie.posterPath),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,6 +64,10 @@ fun MovieCard(movie: MovieItem) {
             )
         }
     }
+}
+
+fun buildImageUrl(posterPath: String): String {
+    return "${Constants.BASE_IMG_URL}$posterPath"
 }
 
 
