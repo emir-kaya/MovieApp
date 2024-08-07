@@ -7,11 +7,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Chip
+import androidx.compose.material.ChipDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -50,7 +54,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailScreen(
     navController: NavHostController,
@@ -88,7 +92,6 @@ fun MovieDetailScreen(
                         .padding(16.dp)
                 ) {
                     Spacer(modifier = Modifier.height(34.dp))
-
 
                     val backdrops = uiState.backdrops?.map { it?.filePath }?.filterNotNull() ?: emptyList()
 
@@ -135,6 +138,30 @@ fun MovieDetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    movie?.genres?.let { genres ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            genres.forEach { genre ->
+                                genre?.name?.let { name ->
+                                    Chip(
+                                        onClick = {},
+                                        modifier = Modifier.padding(4.dp),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ChipDefaults.chipColors(backgroundColor = Color.LightGray)
+                                    ) {
+                                        Text(text = name, color = Color.Black)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -171,144 +198,159 @@ fun MovieDetailScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Row(
+                    LazyColumn(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Center
+                            .fillMaxSize()
+                            .padding(16.dp)
                     ) {
-                        Text(
-                            text = stringResource(id = R.string.runtime, movie?.runtime ?: 0),
-                            fontSize = 16.sp,
-                            color = Color.Gray,
-                            modifier = Modifier.padding(end = 8.dp)
-                        )
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.runtime, movie?.runtime ?: 0),
+                                    fontSize = 16.sp,
+                                    color = Color.Gray,
+                                    modifier = Modifier.padding(end = 8.dp)
+                                )
 
-                        Divider(
-                            color = Color.Gray, thickness = 1.dp, modifier = Modifier
-                                .height(16.dp)
-                                .width(1.dp)
-                        )
+                                Divider(
+                                    color = Color.Gray, thickness = 1.dp, modifier = Modifier
+                                        .height(16.dp)
+                                        .width(1.dp)
+                                )
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
 
-                        Text(
-                            text = movie?.releaseDate ?: stringResource(id = R.string.release_date_not_available),
-                            fontSize = 16.sp,
-                            color = Color.Gray
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    val productionCompany = movie?.productionCompanies?.firstOrNull()
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        productionCompany?.name?.let {
-                            Text(
-                                text = it,
-                                fontSize = 16.sp,
-                                color = Color.Black,
-                                modifier = Modifier.padding(end = 8.dp)
-                            )
+                                Text(
+                                    text = movie?.releaseDate ?: stringResource(id = R.string.release_date_not_available),
+                                    fontSize = 16.sp,
+                                    color = Color.Gray
+                                )
+                            }
                         }
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                        item { Spacer(modifier = Modifier.height(8.dp)) }
 
-                        Divider(
-                            color = Color.Gray, thickness = 1.dp, modifier = Modifier
-                                .height(16.dp)
-                                .width(1.dp)
-                        )
+                        item {
+                            val productionCompany = movie?.productionCompanies?.firstOrNull()
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                productionCompany?.name?.let {
+                                    Text(
+                                        text = it,
+                                        fontSize = 16.sp,
+                                        color = Color.Black,
+                                        modifier = Modifier.padding(end = 8.dp)
+                                    )
+                                }
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
 
-                        movie?.spokenLanguages?.firstOrNull()?.englishName?.let { language ->
-                            Text(
-                                text = language,
-                                fontSize = 16.sp,
-                                color = Color.Gray
-                            )
+                                Divider(
+                                    color = Color.Gray, thickness = 1.dp, modifier = Modifier
+                                        .height(16.dp)
+                                        .width(1.dp)
+                                )
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                movie?.spokenLanguages?.firstOrNull()?.englishName?.let { language ->
+                                    Text(
+                                        text = language,
+                                        fontSize = 16.sp,
+                                        color = Color.Gray
+                                    )
+                                }
+                            }
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                        item { Spacer(modifier = Modifier.height(16.dp)) }
 
-                    Card(
-                        shape = RoundedCornerShape(8.dp),
-                        backgroundColor = Color.LightGray,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateContentSize()
-
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            val isOverviewLong = (movie?.overview?.length ?: 0) > 100
-                            Text(
-                                text = movie?.overview ?: stringResource(id = R.string.overview_not_available),
-                                fontSize = 16.sp,
-                                color = Color.Gray,
-                                maxLines = if (isExpanded) Int.MAX_VALUE else maxLinesForOverview,
-                                overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
-                            )
-                            if (isOverviewLong) {
-                                IconButton(
-                                    onClick = { isExpanded = !isExpanded },
-                                    modifier = Modifier.align(Alignment.End)
+                        item {
+                            Card(
+                                shape = RoundedCornerShape(8.dp),
+                                backgroundColor = Color.LightGray,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .animateContentSize()
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp)
                                 ) {
+                                    val isOverviewLong = (movie?.overview?.length ?: 0) > 100
+                                    Text(
+                                        text = movie?.overview ?: stringResource(id = R.string.overview_not_available),
+                                        fontSize = 16.sp,
+                                        color = Color.Gray,
+                                        maxLines = if (isExpanded) Int.MAX_VALUE else maxLinesForOverview,
+                                        overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
+                                    )
+                                    if (isOverviewLong) {
+                                        IconButton(
+                                            onClick = { isExpanded = !isExpanded },
+                                            modifier = Modifier.align(Alignment.End)
+                                        ) {
+                                            Icon(
+                                                imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                                contentDescription = if (isExpanded) stringResource(id = R.string.read_less) else stringResource(id = R.string.read_more)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        item { Spacer(modifier = Modifier.height(16.dp)) }
+
+                        item {
+                            uiState.teaserVideoKey?.let { videoKey ->
+                                val thumbnailUrl = "${Constants.IMG_YOUTUBE}$videoKey/hqdefault.jpg"
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .clickable {
+                                            val intent = Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("${Constants.YOUTUBE_VIDEO_URL}$videoKey")
+                                            )
+                                            context.startActivity(intent)
+                                        }
+                                ) {
+                                    GlideImage(
+                                        imageModel = thumbnailUrl,
+                                        contentDescription = null,
+                                        modifier = Modifier.matchParentSize()
+                                    )
                                     Icon(
-                                        imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                                        contentDescription = if (isExpanded) stringResource(id = R.string.read_less) else stringResource(id = R.string.read_more)
+                                        imageVector = Icons.Default.PlayArrow,
+                                        contentDescription = stringResource(id = R.string.play_video),
+                                        modifier = Modifier
+                                            .align(Alignment.Center)
+                                            .size(64.dp)
+                                            .background(Color.Black.copy(alpha = 0.5f), CircleShape)
+                                            .padding(8.dp),
+                                        tint = Color.White
                                     )
                                 }
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    uiState.teaserVideoKey?.let { videoKey ->
-                        val thumbnailUrl = "${Constants.IMG_YOUTUBE}$videoKey/hqdefault.jpg"
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .clickable {
-                                    val intent = Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("${Constants.YOUTUBE_VIDEO_URL}$videoKey")
-                                    )
-                                    context.startActivity(intent)
-                                }
-                        ) {
-                            GlideImage(
-                                imageModel = thumbnailUrl,
-                                contentDescription = null,
-                                modifier = Modifier.matchParentSize()
-                            )
-                            Icon(
-                                imageVector = Icons.Default.PlayArrow,
-                                contentDescription = stringResource(id = R.string.play_video),
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .size(64.dp)
-                                    .background(Color.Black.copy(alpha = 0.5f), CircleShape)
-                                    .padding(8.dp),
-                                tint = Color.White
-                            )
-                        }
-                    }
                 }
             }
-
         }
     }
 }
+
+
 
 
 
