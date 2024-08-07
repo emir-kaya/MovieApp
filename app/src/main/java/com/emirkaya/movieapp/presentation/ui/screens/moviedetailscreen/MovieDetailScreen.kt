@@ -1,7 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
 
 import android.content.Intent
-import android.graphics.drawable.Icon
 import android.net.Uri
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -15,13 +14,9 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -35,12 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,10 +43,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emirkaya.movieapp.Constants
 import com.emirkaya.movieapp.R
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.skydoves.landscapist.glide.GlideImage
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.rememberPagerState
 
 
-
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MovieDetailScreen(
     navController: NavHostController,
@@ -69,6 +65,8 @@ fun MovieDetailScreen(
     LaunchedEffect(movieId) {
         viewModel.getMovieDetailAndTeaserKey(movieId, Constants.BEARER_TOKEN)
     }
+
+    val pagerState = rememberPagerState()
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when {
@@ -91,15 +89,38 @@ fun MovieDetailScreen(
                 ) {
                     Spacer(modifier = Modifier.height(34.dp))
 
-                    movie?.backdropPath?.let { backdropPath ->
-                        GlideImage(
-                            imageModel = buildImageUrl(backdropPath),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                        )
+
+                    val backdrops = uiState.backdrops?.map { it?.filePath }?.filterNotNull() ?: emptyList()
+
+                    if (backdrops.isNotEmpty()) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            HorizontalPager(
+                                count = backdrops.size,
+                                state = pagerState,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)
+                            ) { page ->
+                                val backdropPath = backdrops[page]
+                                GlideImage(
+                                    imageModel = buildImageUrl(backdropPath),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                )
+                            }
+                            HorizontalPagerIndicator(
+                                pagerState = pagerState,
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(top = 8.dp)
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

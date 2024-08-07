@@ -1,6 +1,7 @@
 package com.emirkaya.movieapp.data.repository
 
-import com.emirkaya.movieapp.data.model.MovieDetailResponse
+import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
+import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
 import com.emirkaya.movieapp.data.network.ApiService
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import retrofit2.HttpException
@@ -28,6 +29,7 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
             throw Exception("Error: ${response.errorBody()?.string()}")
         }
     }
+
     override suspend fun getFirstVideoKey(movieId: Int, token: String): String? {
         val response = apiService.getMovieVideos(movieId, token)
         if (response.isSuccessful) {
@@ -35,6 +37,15 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
             return videos.firstOrNull()?.key
         } else {
             throw Exception("Error: ${response.errorBody()?.string()}")
+        }
+    }
+
+    override suspend fun getMovieImages(movieId: Int, token: String): ImageResponse {
+        val response = apiService.getMovieImages(movieId, token)
+        if (response.isSuccessful) {
+            return response.body() ?: throw IOException("Images not found")
+        } else {
+            throw HttpException(response)
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.emirkaya.movieapp.domain.usecase
 
-import com.emirkaya.movieapp.data.model.MovieDetailResponse
+import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import javax.inject.Inject
 

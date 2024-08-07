@@ -1,8 +1,9 @@
 package com.emirkaya.movieapp.data.network
 
-import com.emirkaya.movieapp.data.model.MovieDetailResponse
-import com.emirkaya.movieapp.data.model.MovieResponse
-import com.emirkaya.movieapp.data.model.VideoResponse
+import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
+import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
+import com.emirkaya.movieapp.data.model.moviemodel.MovieResponse
+import com.emirkaya.movieapp.data.model.movievideomodel.VideoResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -27,4 +28,10 @@ interface ApiService {
       @Path("movieId") movieId: Int,
       @Header("Authorization") token: String
    ): Response<VideoResponse>
+
+   @GET("{movieId}/images")
+   suspend fun getMovieImages(
+      @Path("movieId") movieId: Int,
+      @Header("Authorization") token: String
+   ): Response<ImageResponse>
 }

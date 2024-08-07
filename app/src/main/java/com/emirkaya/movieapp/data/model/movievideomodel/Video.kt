@@ -1,4 +1,4 @@
-package com.emirkaya.movieapp.data.model
+package com.emirkaya.movieapp.data.model.movievideomodel
 
 
 import com.google.gson.annotations.SerializedName

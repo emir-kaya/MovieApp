@@ -30,11 +30,6 @@ object AppModule {
         return MovieRepositoryImpl(apiService)
     }
 
-    @Provides
-    @Singleton
-    fun provideGetPopularMoviesUseCase(movieRepository: MovieRepository): GetPopularMoviesUseCase {
-        return GetPopularMoviesUseCase(movieRepository)
-    }
 
     @Provides
     @Singleton
@@ -42,9 +37,4 @@ object AppModule {
         return MovieDetailRepositoryImpl(apiService)
     }
 
-    @Provides
-    @Singleton
-    fun provideGetMovieDetailUseCase(movieDetailRepository: MovieDetailRepository): GetMovieDetailUseCase {
-        return GetMovieDetailUseCase(movieDetailRepository)
-    }
 }

@@ -2,7 +2,7 @@ package com.emirkaya.movieapp.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.emirkaya.movieapp.data.model.MovieItem
+import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.emirkaya.movieapp.data.network.ApiService
 
 class MoviePagingSource(

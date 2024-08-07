@@ -16,18 +16,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.Constants
 import com.emirkaya.movieapp.R
-import com.emirkaya.movieapp.data.model.MovieItem
+import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.skydoves.landscapist.glide.GlideImage
-import java.util.Locale
 
 @Composable
-fun MovieCard(movie: MovieItem,navController: NavHostController) {
+fun MovieCard(movie: MovieItem, navController: NavHostController) {
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),

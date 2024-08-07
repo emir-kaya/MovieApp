@@ -3,7 +3,7 @@ package com.emirkaya.movieapp.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.emirkaya.movieapp.data.model.MovieItem
+import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.emirkaya.movieapp.data.network.ApiService
 import com.emirkaya.movieapp.data.paging.MoviePagingSource
 import com.emirkaya.movieapp.domain.repository.MovieRepository
