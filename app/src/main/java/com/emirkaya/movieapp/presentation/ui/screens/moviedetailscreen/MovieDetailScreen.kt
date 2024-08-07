@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.skydoves.landscapist.glide.GlideImage

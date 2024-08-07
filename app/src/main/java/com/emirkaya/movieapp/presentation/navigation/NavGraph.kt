@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MoviesScreen
 import com.emirkaya.movieapp.presentation.ui.screens.actorsscreen.ActorsScreen
 import com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen.MovieDetailScreen

@@ -1,6 +1,6 @@
 package com.emirkaya.movieapp.data.network
 
-import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

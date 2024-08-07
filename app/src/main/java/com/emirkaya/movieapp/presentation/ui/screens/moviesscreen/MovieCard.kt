@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.skydoves.landscapist.glide.GlideImage

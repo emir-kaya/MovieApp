@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.emirkaya.movieapp.Constants
+import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.emirkaya.movieapp.domain.usecase.GetPopularMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

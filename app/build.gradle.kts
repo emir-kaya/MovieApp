@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.com.google.api.client.auth.oauth2.BearerToken
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -17,10 +19,13 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "BEARER_TOKEN", "\"${project.findProperty("BEARER_TOKEN") ?: ""}\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -42,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
