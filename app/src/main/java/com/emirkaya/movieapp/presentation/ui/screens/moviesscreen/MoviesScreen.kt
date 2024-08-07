@@ -45,7 +45,7 @@ fun MoviesScreen(navController: NavHostController, viewModel: MoviesViewModel = 
                 items(moviesPagingData.itemCount) { index ->
                     val movie = moviesPagingData[index]
                     movie?.let {
-                        MovieCard(movie = it)
+                        MovieCard(movie = it, navController = navController)
                     }
                 }
             }

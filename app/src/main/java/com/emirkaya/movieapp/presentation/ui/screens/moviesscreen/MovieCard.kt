@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.moviesscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.Constants
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.MovieItem
@@ -25,7 +27,7 @@ import com.skydoves.landscapist.glide.GlideImage
 import java.util.Locale
 
 @Composable
-fun MovieCard(movie: MovieItem) {
+fun MovieCard(movie: MovieItem,navController: NavHostController) {
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -33,6 +35,7 @@ fun MovieCard(movie: MovieItem) {
             .padding(8.dp)
             .fillMaxWidth()
             .height(380.dp)
+            .clickable { navController.navigate("${Constants.MOVIE_DETAIL}/${movie.id}") }
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             GlideImage(
@@ -71,16 +74,3 @@ fun buildImageUrl(posterPath: String): String {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewMovieCard() {
-    val exampleMovie = MovieItem(
-        id = 1,
-        title = "Deadpool & Wolverine",
-        overview = "A mind-bending thriller",
-        posterPath = "/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-        releaseDate = "2024-07-24",
-        voteAverage = 7.9
-    )
-    MovieCard(movie = exampleMovie)
-}
