@@ -25,12 +25,12 @@ class MoviesViewModel @Inject constructor(private val getPopularMoviesUseCase: G
     val uiState: StateFlow<MoviesUiState> get() = _uiState
 
     init {
-        getPopularMovies(Constants.BEARER_TOKEN)
+        getPopularMovies()
     }
 
-    fun getPopularMovies(token: String) {
+    fun getPopularMovies() {
         _uiState.value = MoviesUiState(
-            moviesFlow = getPopularMoviesUseCase.execute(token).cachedIn(viewModelScope),
+            moviesFlow = getPopularMoviesUseCase.execute().cachedIn(viewModelScope),
             isLoading = false
         )
     }

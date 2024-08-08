@@ -4,11 +4,11 @@ import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
 import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
 
 interface MovieDetailRepository {
-    suspend fun getMovieDetail(movieId: Int, token: String): MovieDetailResponse
+    suspend fun getMovieDetail(movieId: Int): MovieDetailResponse
 
-    suspend fun getTrailerVideoKey(movieId: Int, token: String): String?
+    suspend fun getTrailerVideoKey(movieId: Int): String?
 
-    suspend fun getFirstVideoKey(movieId: Int, token: String): String?
+    suspend fun getFirstVideoKey(movieId: Int): String?
 
-    suspend fun getMovieImages(movieId: Int, token: String): ImageResponse
+    suspend fun getMovieImages(movieId: Int): ImageResponse
 }

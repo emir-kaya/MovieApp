@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(private val apiService: ApiService) : MovieRepository {
-    override fun getPopularMovies(token: String): Flow<PagingData<MovieItem>> {
+    override fun getPopularMovies(): Flow<PagingData<MovieItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { MoviePagingSource(apiService, token) }
+            pagingSourceFactory = { MoviePagingSource(apiService) }
         ).flow
     }
 }

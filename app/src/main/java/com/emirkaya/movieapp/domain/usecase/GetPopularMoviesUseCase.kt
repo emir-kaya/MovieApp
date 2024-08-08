@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetPopularMoviesUseCase @Inject constructor(private val movieRepository: MovieRepository) {
-    fun execute(token: String): Flow<PagingData<MovieItem>> {
-        return movieRepository.getPopularMovies(token)
+    fun execute(): Flow<PagingData<MovieItem>> {
+        return movieRepository.getPopularMovies()
     }
 }

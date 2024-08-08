@@ -7,13 +7,12 @@ import com.emirkaya.movieapp.data.network.ApiService
 
 class MoviePagingSource(
     private val apiService: ApiService,
-    private val token: String
 ) : PagingSource<Int, MovieItem>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieItem> {
         val page = params.key ?: 1
         return try {
-            val response = apiService.getMovieList(token, page)
+            val response = apiService.getMovieList(page)
             val movies = response.body()?.movieItems ?: emptyList()
             LoadResult.Page(
                 data = movies,

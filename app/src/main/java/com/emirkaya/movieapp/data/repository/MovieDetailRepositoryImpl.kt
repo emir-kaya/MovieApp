@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiService) : MovieDetailRepository {
 
-    override suspend fun getMovieDetail(movieId: Int, token: String): MovieDetailResponse {
-        val response = apiService.getMovieDetail(movieId, token)
+    override suspend fun getMovieDetail(movieId: Int): MovieDetailResponse {
+        val response = apiService.getMovieDetail(movieId)
         if (response.isSuccessful) {
             return response.body() ?: throw IOException("Movie details not found")
         } else {
@@ -19,8 +19,8 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
         }
     }
 
-    override suspend fun getTrailerVideoKey(movieId: Int, token: String): String? {
-        val response = apiService.getMovieVideos(movieId, token)
+    override suspend fun getTrailerVideoKey(movieId: Int): String? {
+        val response = apiService.getMovieVideos(movieId)
         if (response.isSuccessful) {
             val videos = response.body()?.results ?: emptyList()
             val teaserVideo = videos.find { it?.type.equals("Trailer", ignoreCase = true) }
@@ -30,8 +30,8 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
         }
     }
 
-    override suspend fun getFirstVideoKey(movieId: Int, token: String): String? {
-        val response = apiService.getMovieVideos(movieId, token)
+    override suspend fun getFirstVideoKey(movieId: Int): String? {
+        val response = apiService.getMovieVideos(movieId)
         if (response.isSuccessful) {
             val videos = response.body()?.results ?: emptyList()
             return videos.firstOrNull()?.key
@@ -40,8 +40,8 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
         }
     }
 
-    override suspend fun getMovieImages(movieId: Int, token: String): ImageResponse {
-        val response = apiService.getMovieImages(movieId, token)
+    override suspend fun getMovieImages(movieId: Int): ImageResponse {
+        val response = apiService.getMovieImages(movieId)
         if (response.isSuccessful) {
             return response.body() ?: throw IOException("Images not found")
         } else {

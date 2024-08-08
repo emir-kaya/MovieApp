@@ -18,4 +18,5 @@
     <string name="read_less">Read less</string>
     <string name="default_logo_description">Default logo image</string>
     <string name="play_video">Play Video</string>
+    <string name="detail_error">Movie details not found</string>
 </resources>

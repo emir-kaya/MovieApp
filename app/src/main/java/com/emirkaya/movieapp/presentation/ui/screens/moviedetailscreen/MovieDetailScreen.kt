@@ -27,9 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,13 +37,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
+import com.emirkaya.movieapp.presentation.ui.theme.Dimensions
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.skydoves.landscapist.glide.GlideImage
 import com.google.accompanist.pager.HorizontalPager
@@ -62,12 +58,10 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var isExpanded by remember { mutableStateOf(false) }
-    val maxLinesForOverview = 2
     val context = LocalContext.current
 
     LaunchedEffect(movieId) {
-        viewModel.getMovieDetailAndTeaserKey(movieId, Constants.BEARER_TOKEN)
+        viewModel.getMovieDetailAndTeaserKey(movieId)
     }
 
     val pagerState = rememberPagerState()
@@ -89,11 +83,11 @@ fun MovieDetailScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(Dimensions.horizontalPadding)
                 ) {
-                    Spacer(modifier = Modifier.height(34.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.spacerHeightLarge))
 
-                    val backdrops = uiState.backdrops?.map { it?.filePath }?.filterNotNull() ?: emptyList()
+                    val backdrops = uiState.backdrops ?: emptyList()
 
                     if (backdrops.isNotEmpty()) {
                         Column(
@@ -105,7 +99,7 @@ fun MovieDetailScreen(
                                 state = pagerState,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(200.dp)
+                                    .height(Dimensions.imageHeight)
                             ) { page ->
                                 val backdropPath = backdrops[page]
                                 GlideImage(
@@ -113,44 +107,44 @@ fun MovieDetailScreen(
                                     contentDescription = null,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(200.dp)
-                                        .clip(RoundedCornerShape(8.dp))
+                                        .height(Dimensions.imageHeight)
+                                        .clip(RoundedCornerShape(Dimensions.cardCornerRadius))
                                 )
                             }
                             HorizontalPagerIndicator(
                                 pagerState = pagerState,
                                 modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
-                                    .padding(top = 8.dp)
+                                    .padding(top = Dimensions.spacerHeightSmall)
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.spacerHeightMedium))
 
                     Text(
                         text = movie?.title ?: stringResource(id = R.string.title_not_available),
-                        fontSize = 32.sp,
+                        fontSize = Dimensions.fontSizeTitle,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.spacerHeightMedium))
 
                     movie?.genres?.let { genres ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
+                                .padding(bottom = Dimensions.spacerHeightSmall),
                             horizontalArrangement = Arrangement.Center
                         ) {
                             genres.forEach { genre ->
                                 genre?.name?.let { name ->
                                     Chip(
                                         onClick = {},
-                                        modifier = Modifier.padding(4.dp),
-                                        shape = RoundedCornerShape(8.dp),
+                                        modifier = Modifier.padding(Dimensions.chipPadding),
+                                        shape = RoundedCornerShape(Dimensions.cardCornerRadius),
                                         colors = ChipDefaults.chipColors(backgroundColor = Color.LightGray)
                                     ) {
                                         Text(text = name, color = Color.Black)
@@ -160,146 +154,140 @@ fun MovieDetailScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                            .padding(bottom = Dimensions.spacerHeightSmall),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        val voteAverage = movie?.voteAverage ?: 0.0
-                        val fullStars = voteAverage.toInt() / 2
-                        val halfStars = if (voteAverage % 2 >= 1) 1 else 0
-                        val emptyStars = 5 - fullStars - halfStars
-
-                        repeat(fullStars) {
+                        repeat(uiState.fullStars) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_fullstar),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(Dimensions.starIconSize)
                             )
                         }
-                        repeat(halfStars) {
+                        repeat(uiState.halfStars) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_halfstar),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(Dimensions.starIconSize)
                             )
                         }
-                        repeat(emptyStars) {
+                        repeat(uiState.emptyStars) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_emptystar),
                                 contentDescription = null,
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(Dimensions.starIconSize)
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
+                            .padding(Dimensions.horizontalPadding)
                     ) {
                         item {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
+                                    .padding(bottom = Dimensions.spacerHeightSmall),
                                 horizontalArrangement = Arrangement.Center
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.runtime, movie?.runtime ?: 0),
-                                    fontSize = 16.sp,
+                                    fontSize = Dimensions.fontSizeMedium,
                                     color = Color.Gray,
-                                    modifier = Modifier.padding(end = 8.dp)
+                                    modifier = Modifier.padding(end = Dimensions.chipPadding)
                                 )
 
                                 Divider(
-                                    color = Color.Gray, thickness = 1.dp, modifier = Modifier
-                                        .height(16.dp)
-                                        .width(1.dp)
+                                    color = Color.Gray, thickness = Dimensions.dividerThickness, modifier = Modifier
+                                        .height(Dimensions.dividerHeight)
+                                        .width(Dimensions.dividerThickness)
                                 )
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(Dimensions.chipPadding))
 
                                 Text(
                                     text = movie?.releaseDate ?: stringResource(id = R.string.release_date_not_available),
-                                    fontSize = 16.sp,
+                                    fontSize = Dimensions.fontSizeMedium,
                                     color = Color.Gray
                                 )
                             }
                         }
 
-                        item { Spacer(modifier = Modifier.height(8.dp)) }
+                        item { Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall)) }
 
                         item {
-                            val productionCompany = movie?.productionCompanies?.firstOrNull()
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                productionCompany?.name?.let {
+                                uiState.productionCompany?.let {
                                     Text(
                                         text = it,
-                                        fontSize = 16.sp,
+                                        fontSize = Dimensions.fontSizeMedium,
                                         color = Color.Black,
-                                        modifier = Modifier.padding(end = 8.dp)
+                                        modifier = Modifier.padding(end = Dimensions.chipPadding)
                                     )
                                 }
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(Dimensions.chipPadding))
 
                                 Divider(
-                                    color = Color.Gray, thickness = 1.dp, modifier = Modifier
-                                        .height(16.dp)
-                                        .width(1.dp)
+                                    color = Color.Gray, thickness = Dimensions.dividerThickness, modifier = Modifier
+                                        .height(Dimensions.dividerHeight)
+                                        .width(Dimensions.dividerThickness)
                                 )
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Spacer(modifier = Modifier.width(Dimensions.chipPadding))
 
-                                movie?.spokenLanguages?.firstOrNull()?.englishName?.let { language ->
+                                uiState.language?.let { language ->
                                     Text(
                                         text = language,
-                                        fontSize = 16.sp,
+                                        fontSize = Dimensions.fontSizeMedium,
                                         color = Color.Gray
                                     )
                                 }
                             }
                         }
 
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
+                        item { Spacer(modifier = Modifier.height(Dimensions.spacerHeightMedium)) }
 
                         item {
                             Card(
-                                shape = RoundedCornerShape(8.dp),
+                                shape = RoundedCornerShape(Dimensions.cardCornerRadius),
                                 backgroundColor = Color.LightGray,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .animateContentSize()
                             ) {
                                 Column(
-                                    modifier = Modifier.padding(16.dp)
+                                    modifier = Modifier.padding(Dimensions.cardPadding)
                                 ) {
-                                    val isOverviewLong = (movie?.overview?.length ?: 0) > 100
+                                    val isOverviewLong = (uiState.movieDetail?.overview?.length ?: 0) > 100
                                     Text(
-                                        text = movie?.overview ?: stringResource(id = R.string.overview_not_available),
-                                        fontSize = 16.sp,
+                                        text = uiState.movieDetail?.overview ?: stringResource(id = R.string.overview_not_available),
+                                        fontSize = Dimensions.fontSizeMedium,
                                         color = Color.Gray,
-                                        maxLines = if (isExpanded) Int.MAX_VALUE else maxLinesForOverview,
-                                        overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
+                                        maxLines = if (uiState.isExpanded) Int.MAX_VALUE else 2,
+                                        overflow = if (uiState.isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
                                     )
                                     if (isOverviewLong) {
                                         IconButton(
-                                            onClick = { isExpanded = !isExpanded },
+                                            onClick = { viewModel.handleEvent(MovieDetailUiEvent.ToggleOverviewExpansion) },
                                             modifier = Modifier.align(Alignment.End)
                                         ) {
                                             Icon(
-                                                imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
-                                                contentDescription = if (isExpanded) stringResource(id = R.string.read_less) else stringResource(id = R.string.read_more)
+                                                imageVector = if (uiState.isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                                                contentDescription = if (uiState.isExpanded) stringResource(id = R.string.read_less) else stringResource(id = R.string.read_more)
                                             )
                                         }
                                     }
@@ -307,7 +295,7 @@ fun MovieDetailScreen(
                             }
                         }
 
-                        item { Spacer(modifier = Modifier.height(16.dp)) }
+                        item { Spacer(modifier = Modifier.height(Dimensions.spacerHeightMedium)) }
 
                         item {
                             uiState.teaserVideoKey?.let { videoKey ->
@@ -315,8 +303,8 @@ fun MovieDetailScreen(
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(200.dp)
-                                        .clip(RoundedCornerShape(8.dp))
+                                        .height(Dimensions.imageHeight)
+                                        .clip(RoundedCornerShape(Dimensions.cardCornerRadius))
                                         .clickable {
                                             val intent = Intent(
                                                 Intent.ACTION_VIEW,
@@ -335,9 +323,9 @@ fun MovieDetailScreen(
                                         contentDescription = stringResource(id = R.string.play_video),
                                         modifier = Modifier
                                             .align(Alignment.Center)
-                                            .size(64.dp)
-                                            .background(Color.Black.copy(alpha = 0.5f), CircleShape)
-                                            .padding(8.dp),
+                                            .size(Dimensions.playButtonSize)
+                                            .background(Color.Black.copy(Dimensions.playButtonBackgroundAlpha), CircleShape)
+                                            .padding(Dimensions.playButtonPadding),
                                         tint = Color.White
                                     )
                                 }

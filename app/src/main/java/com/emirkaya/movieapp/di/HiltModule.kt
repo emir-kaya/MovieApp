@@ -8,6 +8,7 @@ import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import com.emirkaya.movieapp.domain.repository.MovieRepository
 import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
 import com.emirkaya.movieapp.domain.usecase.GetPopularMoviesUseCase
+import com.emirkaya.movieapp.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
-        return ApiClient.getClient()
+        val token = Constants.BEARER_TOKEN // Token'ı burada alın (örneğin, sabit bir yerden)
+        return ApiClient.getClient(token)
     }
 
     @Provides

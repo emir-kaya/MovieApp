@@ -5,5 +5,5 @@ import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    fun getPopularMovies(token: String): Flow<PagingData<MovieItem>>
+    fun getPopularMovies(): Flow<PagingData<MovieItem>>
 }
