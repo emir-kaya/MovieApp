@@ -4,4 +4,19 @@
     <string name="rating">Rating: %1$.1f</string>
     <string name="date">Date: %1$s</string>
     <string name="unknown_error">An unknown error occurred</string>
+    <string name="title_not_available">Title not available</string>
+    <string name="overview_not_available">Overview not available</string>
+    <string name="overview">Overview: %1$s</string>
+    <string name="release_date_not_available">Release date not available</string>
+    <string name="release_date">Release Date: %1$s</string>
+    <string name="runtime_not_available">Runtime not available</string>
+    <string name="runtime">%1$s mins</string>
+    <string name="vote_average_not_available">Vote average not available</string>
+    <string name="vote_average">Vote Average: %1$.1f</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="read_more">Read more</string>
+    <string name="read_less">Read less</string>
+    <string name="default_logo_description">Default logo image</string>
+    <string name="play_video">Play Video</string>
+    <string name="detail_error">Movie details not found</string>
 </resources>

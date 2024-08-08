@@ -2,9 +2,13 @@ package com.emirkaya.movieapp.di
 
 import com.emirkaya.movieapp.data.network.ApiClient
 import com.emirkaya.movieapp.data.network.ApiService
+import com.emirkaya.movieapp.data.repository.MovieDetailRepositoryImpl
 import com.emirkaya.movieapp.data.repository.MovieRepositoryImpl
+import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import com.emirkaya.movieapp.domain.repository.MovieRepository
+import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
 import com.emirkaya.movieapp.domain.usecase.GetPopularMoviesUseCase
+import com.emirkaya.movieapp.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +22,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiService(): ApiService {
-        return ApiClient.getClient()
+        val token = Constants.BEARER_TOKEN // Token'ı burada alın (örneğin, sabit bir yerden)
+        return ApiClient.getClient(token)
     }
 
     @Provides
@@ -27,9 +32,11 @@ object AppModule {
         return MovieRepositoryImpl(apiService)
     }
 
+
     @Provides
     @Singleton
-    fun provideGetPopularMoviesUseCase(movieRepository: MovieRepository): GetPopularMoviesUseCase {
-        return GetPopularMoviesUseCase(movieRepository)
+    fun provideMovieDetailRepository(apiService: ApiService): MovieDetailRepository {
+        return MovieDetailRepositoryImpl(apiService)
     }
+
 }
