@@ -17,25 +17,42 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.actor.ActorItem
+import com.emirkaya.movieapp.presentation.ui.theme.ActorCardDimensions
 import com.emirkaya.movieapp.util.Constants
+import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
+enum class Gender {
+    FEMALE,
+    MALE,
+    GAY;
 
+    companion object {
+        fun fromId(id: Int): Gender {
+            return when (id) {
+                1 -> FEMALE
+                2 -> MALE
+                3 -> GAY
+                else -> GAY
+            }
+        }
+    }
+}
 @Composable
 fun ActorCard(actor: ActorItem, navController: NavHostController) {
     Card(
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = RoundedCornerShape(ActorCardDimensions.cornerRadius),
+        elevation = CardDefaults.cardElevation(defaultElevation = ActorCardDimensions.elevation),
         modifier = Modifier
-            .padding(8.dp)
+            .padding(ActorCardDimensions.padding)
             .fillMaxWidth()
-            .height(90.dp)
+            .height(ActorCardDimensions.height)
             .clickable {
 
             }
     ) {
         Row(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(ActorCardDimensions.padding)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -43,10 +60,10 @@ fun ActorCard(actor: ActorItem, navController: NavHostController) {
                 imageModel = buildImageUrl(actor.profilePath),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(40.dp))
+                    .size(ActorCardDimensions.imageSize)
+                    .clip(RoundedCornerShape(ActorCardDimensions.imageSize / 2))
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(ActorCardDimensions.spacerWidth))
 
             Column(
                 modifier = Modifier.weight(1f)
@@ -54,49 +71,54 @@ fun ActorCard(actor: ActorItem, navController: NavHostController) {
                 Text(
                     text = actor.name ?: stringResource(R.string.unknown),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
+                    fontSize = ActorCardDimensions.nameFontSize,
                     color = Color.Black
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(ActorCardDimensions.smallSpacerWidth))
                 Text(
                     text = actor.knownForDepartment ?: stringResource(R.string.unknown),
-                    fontSize = 14.sp,
+                    fontSize = ActorCardDimensions.departmentFontSize,
                     color = Color.Gray
                 )
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(ActorCardDimensions.smallSpacerWidth))
 
-            when (actor.gender) {
-                3 -> Icon(
-                    painter = painterResource(id = R.drawable.ic_homosexual),
-                    contentDescription = stringResource(R.string.homosexual),
-                    tint = Color.Red,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .padding(end = 8.dp)
-                )
-                2 -> Icon(
-                    painter = painterResource(id = R.drawable.ic_man),
-                    contentDescription = stringResource(R.string.male),
-                    tint = Color.Blue,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .padding(end = 8.dp)
-                )
-                1 -> Icon(
-                    painter = painterResource(id = R.drawable.ic_woman),
-                    contentDescription = stringResource(R.string.female),
-                    tint = Color.Magenta,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .padding(end = 8.dp)
-                )
+            val gender = when (Gender.fromId(actor.gender ?: 0)) {
+                Gender.FEMALE -> {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_woman),
+                        contentDescription = stringResource(R.string.female),
+                        tint = Color.Magenta,
+                        modifier = Modifier
+                            .size(ActorCardDimensions.iconSize)
+                            .padding(end = ActorCardDimensions.smallSpacerWidth)
+                    )
+                }
+                Gender.MALE -> {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_man),
+                        contentDescription = stringResource(R.string.male),
+                        tint = Color.Blue,
+                        modifier = Modifier
+                            .size(ActorCardDimensions.iconSize)
+                            .padding(end = ActorCardDimensions.smallSpacerWidth)
+                    )
+                }
+                Gender.GAY -> {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_homosexual),
+                        contentDescription = stringResource(R.string.homosexual),
+                        tint = Color.Red,
+                        modifier = Modifier
+                            .size(ActorCardDimensions.iconSize)
+                            .padding(end = ActorCardDimensions.smallSpacerWidth)
+                    )
+                }
             }
         }
     }
 }
 
-fun buildImageUrl(posterPath: String?): String {
-    return "${Constants.BASE_IMG_URL}$posterPath"
-}
+
+

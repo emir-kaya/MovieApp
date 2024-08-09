@@ -23,3 +23,16 @@ object Dimensions {
     val fontSizeTitle = 32.sp
     val fontSizeMedium = 16.sp
 }
+
+object ActorCardDimensions {
+    val cornerRadius = 16.dp
+    val elevation = 8.dp
+    val padding = 8.dp
+    val height = 90.dp
+    val imageSize = 80.dp
+    val nameFontSize = 18.sp
+    val departmentFontSize = 14.sp
+    val iconSize = 24.dp
+    val spacerWidth = 16.dp
+    val smallSpacerWidth = 8.dp
+}

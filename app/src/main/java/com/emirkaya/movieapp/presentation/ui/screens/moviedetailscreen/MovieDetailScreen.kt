@@ -43,6 +43,7 @@ import androidx.navigation.compose.rememberNavController
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.presentation.ui.theme.Dimensions
+import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.skydoves.landscapist.glide.GlideImage
 import com.google.accompanist.pager.HorizontalPager
@@ -348,7 +349,4 @@ fun MovieDetailScreenPreview() {
     MovieDetailScreen(navController = rememberNavController(), movieId = 1)
 }
 
-fun buildImageUrl(path: String): String {
-    return "${Constants.BASE_IMG_URL}$path"
-}
 
