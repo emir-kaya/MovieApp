@@ -2,12 +2,14 @@ package com.emirkaya.movieapp.di
 
 import com.emirkaya.movieapp.data.network.ApiClient
 import com.emirkaya.movieapp.data.network.ApiService
+import com.emirkaya.movieapp.data.repository.ActorDetailRepositoryImpl
+import com.emirkaya.movieapp.data.repository.ActorRepositoryImpl
 import com.emirkaya.movieapp.data.repository.MovieDetailRepositoryImpl
 import com.emirkaya.movieapp.data.repository.MovieRepositoryImpl
+import com.emirkaya.movieapp.domain.repository.ActorDetailRepository
+import com.emirkaya.movieapp.domain.repository.ActorRepository
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import com.emirkaya.movieapp.domain.repository.MovieRepository
-import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
-import com.emirkaya.movieapp.domain.usecase.GetPopularMoviesUseCase
 import com.emirkaya.movieapp.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -37,6 +39,18 @@ object AppModule {
     @Singleton
     fun provideMovieDetailRepository(apiService: ApiService): MovieDetailRepository {
         return MovieDetailRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideActorRepository(apiService: ApiService): ActorRepository {
+        return ActorRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideActorDetailRepository(apiService: ApiService): ActorDetailRepository {
+        return ActorDetailRepositoryImpl(apiService)
     }
 
 }
