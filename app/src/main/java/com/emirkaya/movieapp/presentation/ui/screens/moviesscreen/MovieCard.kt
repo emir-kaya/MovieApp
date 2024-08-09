@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
+import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -67,8 +68,5 @@ fun MovieCard(movie: MovieItem, navController: NavHostController) {
     }
 }
 
-fun buildImageUrl(posterPath: String): String {
-    return "${Constants.BASE_IMG_URL}$posterPath"
-}
 
 

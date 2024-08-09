@@ -19,4 +19,7 @@
     <string name="default_logo_description">Default logo image</string>
     <string name="play_video">Play Video</string>
     <string name="detail_error">Movie details not found</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="homosexual">Homosexual</string>
 </resources>
