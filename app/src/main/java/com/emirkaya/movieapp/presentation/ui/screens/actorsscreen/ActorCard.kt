@@ -12,8 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.actor.ActorItem
@@ -47,7 +45,7 @@ fun ActorCard(actor: ActorItem, navController: NavHostController) {
             .fillMaxWidth()
             .height(ActorCardDimensions.height)
             .clickable {
-
+                navController.navigate("${Constants.ACTOR_DETAIL}/${actor.id}")
             }
     ) {
         Row(

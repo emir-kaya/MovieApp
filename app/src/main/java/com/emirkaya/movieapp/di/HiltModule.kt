@@ -3,10 +3,12 @@ package com.emirkaya.movieapp.di
 import com.emirkaya.movieapp.data.network.ApiClient
 import com.emirkaya.movieapp.data.network.ApiService
 import com.emirkaya.movieapp.data.repository.ActorDetailRepositoryImpl
+import com.emirkaya.movieapp.data.repository.ActorMovieCreditsRepositoryImpl
 import com.emirkaya.movieapp.data.repository.ActorRepositoryImpl
 import com.emirkaya.movieapp.data.repository.MovieDetailRepositoryImpl
 import com.emirkaya.movieapp.data.repository.MovieRepositoryImpl
 import com.emirkaya.movieapp.domain.repository.ActorDetailRepository
+import com.emirkaya.movieapp.domain.repository.ActorMovieCreditsRepository
 import com.emirkaya.movieapp.domain.repository.ActorRepository
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import com.emirkaya.movieapp.domain.repository.MovieRepository
@@ -51,6 +53,12 @@ object AppModule {
     @Singleton
     fun provideActorDetailRepository(apiService: ApiService): ActorDetailRepository {
         return ActorDetailRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideActorMovieCreditsRepository(apiService: ApiService): ActorMovieCreditsRepository{
+        return ActorMovieCreditsRepositoryImpl(apiService)
     }
 
 }
