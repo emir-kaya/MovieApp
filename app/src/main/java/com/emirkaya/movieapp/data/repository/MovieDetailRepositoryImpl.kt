@@ -1,7 +1,9 @@
 package com.emirkaya.movieapp.data.repository
 
+import com.emirkaya.movieapp.data.model.moivedetailactors.MovieDetailActorsResponse
 import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
 import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
+import com.emirkaya.movieapp.data.model.similarmovies.SimilarMovieResponse
 import com.emirkaya.movieapp.data.network.ApiService
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import retrofit2.HttpException
@@ -44,6 +46,24 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
         val response = apiService.getMovieImages(movieId)
         if (response.isSuccessful) {
             return response.body() ?: throw IOException("Images not found")
+        } else {
+            throw HttpException(response)
+        }
+    }
+
+    override suspend fun getSimilarMovies(movieId: Int): SimilarMovieResponse {
+        val response = apiService.getSimilarMovies(movieId)
+        if (response.isSuccessful) {
+            return response.body() ?: throw IOException("Similar movies not found")
+        } else {
+            throw HttpException(response)
+        }
+    }
+
+    override suspend fun getMovieDetailActors(movieId: Int): MovieDetailActorsResponse {
+        val response = apiService.getMovieDetailActors(movieId)
+        if (response.isSuccessful) {
+            return response.body() ?: throw IOException("Actors not found")
         } else {
             throw HttpException(response)
         }

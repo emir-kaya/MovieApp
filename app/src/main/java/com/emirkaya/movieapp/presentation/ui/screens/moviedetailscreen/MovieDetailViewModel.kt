@@ -2,9 +2,13 @@ package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.emirkaya.movieapp.data.model.moivedetailactors.CastActor
 import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
+import com.emirkaya.movieapp.data.model.similarmovies.SimilarMovie
+import com.emirkaya.movieapp.domain.usecase.GetMovieDetailActorsUseCase
 import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
 import com.emirkaya.movieapp.domain.usecase.GetMovieImagesUseCase
+import com.emirkaya.movieapp.domain.usecase.GetSimilarMoviesUseCase
 import com.emirkaya.movieapp.domain.usecase.GetTeaserVideoKeyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +27,9 @@ data class MovieDetailUiState(
     val emptyStars: Int = 0,
     val productionCompany: String? = null,
     val language: String? = null,
-    val isExpanded: Boolean = false
+    val isExpanded: Boolean = false,
+    val similarMovies: List<SimilarMovie>? = null,
+    val movieDetailActors: List<CastActor>? = null
 )
 sealed class MovieDetailUiEvent {
     object ToggleOverviewExpansion : MovieDetailUiEvent()
@@ -33,7 +39,9 @@ sealed class MovieDetailUiEvent {
 class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase,
     private val getTeaserVideoKeyUseCase: GetTeaserVideoKeyUseCase,
-    private val getMovieImagesUseCase: GetMovieImagesUseCase
+    private val getMovieImagesUseCase: GetMovieImagesUseCase,
+    private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase,
+    private val getMovieDetailActorsUseCase: GetMovieDetailActorsUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MovieDetailUiState())
@@ -46,11 +54,11 @@ class MovieDetailViewModel @Inject constructor(
                 val movieDetail = getMovieDetailUseCase.execute(movieId)
                 val teaserVideoKey = getTeaserVideoKeyUseCase.execute(movieId)
                 val images = getMovieImagesUseCase.execute(movieId)
-
+                val similarMovies = getSimilarMoviesUseCase.execute(movieId).results?.mapNotNull { it }
+                val movieDetailActors = getMovieDetailActorsUseCase.execute(movieId).castActor?.mapNotNull { it }
 
                 val backdropPaths = images.backdrops?.mapNotNull { it?.filePath }
 
-                // Yıldız
                 val voteAverage = movieDetail.voteAverage ?: 0.0
                 val fullStars = voteAverage.toInt() / 2
                 val halfStars = if (voteAverage % 2 >= 1) 1 else 0
@@ -64,13 +72,16 @@ class MovieDetailViewModel @Inject constructor(
                     halfStars = halfStars,
                     emptyStars = emptyStars,
                     productionCompany = movieDetail.productionCompanies?.firstOrNull()?.name,
-                    language = movieDetail.spokenLanguages?.firstOrNull()?.englishName
+                    language = movieDetail.spokenLanguages?.firstOrNull()?.englishName,
+                    similarMovies = similarMovies,
+                    movieDetailActors = movieDetailActors
                 )
             } catch (e: Exception) {
                 _uiState.value = MovieDetailUiState(error = e.message)
             }
         }
     }
+
     fun handleEvent(event: MovieDetailUiEvent) {
         when (event) {
             is MovieDetailUiEvent.ToggleOverviewExpansion -> {

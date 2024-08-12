@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -37,11 +38,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.R
+import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MovieCard
 import com.emirkaya.movieapp.presentation.ui.theme.Dimensions
 import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -329,6 +332,46 @@ fun MovieDetailScreen(
                                             .padding(Dimensions.playButtonPadding),
                                         tint = Color.White
                                     )
+                                }
+                            }
+                        }
+
+
+                        item {
+                            uiState.similarMovies?.let { similarMovies ->
+                                Spacer(modifier = Modifier.height(24.dp))
+                                Text(
+                                    text = stringResource(R.string.similar_movies),
+                                    fontSize = Dimensions.fontSizeMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black
+                                )
+                                Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
+                                LazyRow(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    items(similarMovies.size) { index ->
+                                        SimilarMovieCard(movie = similarMovies[index], navController = navController)
+                                    }
+                                }
+                            }
+                        }
+                        item {
+                            uiState.movieDetailActors?.let { movieDetailActors ->
+                                Spacer(modifier = Modifier.height(24.dp))
+                                Text(
+                                    text = stringResource(R.string.cast),
+                                    fontSize = Dimensions.fontSizeMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black
+                                )
+                                Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
+                                LazyRow(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    items(movieDetailActors.size) { index ->
+                                        MovieDetailActorCard(actor = movieDetailActors[index], navController = navController)
+                                    }
                                 }
                             }
                         }
