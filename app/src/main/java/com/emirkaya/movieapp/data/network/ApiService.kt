@@ -2,6 +2,7 @@ package com.emirkaya.movieapp.data.network
 
 import com.emirkaya.movieapp.data.model.actor.PeopleResponse
 import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
+import com.emirkaya.movieapp.data.model.moviecredit.MovieCreditResponse
 import com.emirkaya.movieapp.data.model.moviemodel.MovieResponse
 import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
 import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
@@ -41,4 +42,10 @@ interface ApiService {
    suspend fun getActorDetail(
       @Path("actorId") actorId: Int
    ): Response<ActorDetailResponse>
+
+   @GET("person/{actorId}/movie_credits")
+   suspend fun getActorMovieCredits(
+      @Path("actorId") actorId: Int
+   ): Response<MovieCreditResponse>
+
 }

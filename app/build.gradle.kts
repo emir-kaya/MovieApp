@@ -109,7 +109,13 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-pager:0.24.13-rc")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.13-rc")
 
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.35.1-alpha")
+
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.32.0")
+
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
+
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 
 
 

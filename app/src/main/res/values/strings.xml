@@ -22,4 +22,5 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="homosexual">Homosexual</string>
+    <string name="biography">Biography</string>
 </resources>
