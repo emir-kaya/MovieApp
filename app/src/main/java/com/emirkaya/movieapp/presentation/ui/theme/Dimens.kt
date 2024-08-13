@@ -65,3 +65,16 @@ object MovieCardDimensions {
     val horizontalPadding = 4.dp
     val cardWidth = 180.dp
 }
+
+object SearchBarDimensions {
+    val paddingHorizontal = 16.dp
+    val paddingVertical = 16.dp
+    val iconSize = 20.dp
+    val iconPaddingStart = 40.dp
+    val iconPaddingEnd = 16.dp
+    val elevation = 4.dp
+    val textSize = 18.sp
+    val textFieldPaddingHorizontal = 16.dp
+    val textFieldPaddingVertical = 12.dp
+    val clearIconSize = 20.dp
+}

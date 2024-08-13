@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.emirkaya.movieapp.R
+import com.emirkaya.movieapp.presentation.ui.theme.SearchBarDimensions
 
 @Composable
 fun SearchBar(
@@ -34,15 +35,15 @@ fun SearchBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .padding(horizontal = SearchBarDimensions.paddingHorizontal, vertical = SearchBarDimensions.paddingVertical)
             .background(Color.Transparent),
         shape = CircleShape,
-        elevation = 4.dp
+        elevation = SearchBarDimensions.elevation
     ) {
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colors.surface, CircleShape)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = SearchBarDimensions.textFieldPaddingHorizontal, vertical = SearchBarDimensions.textFieldPaddingVertical)
                 .fillMaxWidth(),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -52,7 +53,7 @@ fun SearchBar(
                 tint = Color.Gray,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .size(20.dp)
+                    .size(SearchBarDimensions.iconSize)
             )
 
             BasicTextField(
@@ -63,12 +64,12 @@ fun SearchBar(
                 },
                 singleLine = true,
                 textStyle = MaterialTheme.typography.body1.copy(
-                    fontSize = 18.sp,
+                    fontSize = SearchBarDimensions.textSize,
                     color = Color.Black
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 40.dp, end = 16.dp)
+                    .padding(start = SearchBarDimensions.iconPaddingStart, end = SearchBarDimensions.iconPaddingEnd)
             )
 
             if (textFieldValue.value.text.isNotEmpty()) {
@@ -76,7 +77,7 @@ fun SearchBar(
                     onClick = { textFieldValue.value = TextFieldValue(""); onQueryChanged("") },
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .size(20.dp)
+                        .size(SearchBarDimensions.clearIconSize)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_clear),
@@ -88,3 +89,4 @@ fun SearchBar(
         }
     }
 }
+
