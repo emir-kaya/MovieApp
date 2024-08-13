@@ -73,7 +73,7 @@ fun MovieDetailScreen(
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when {
             uiState.isLoading -> {
-                CircularProgressIndicator()
+                CircularProgressIndicator() //lottie extension
             }
             uiState.error != null -> {
                 Text(
