@@ -35,7 +35,7 @@ fun MovieDetailActorCard(actor: CastActor, navController: NavHostController) {
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
         modifier = Modifier
             .padding(MovieCardDimensions.cardPadding)
-            .width(180.dp)
+            .width(MovieCardDimensions.cardWidth)
             .height(MovieCardDimensions.cardHeight)
             .clickable { navController.navigate("${Constants.ACTOR_DETAIL}/${actor.id}") }
     ) {
@@ -58,7 +58,7 @@ fun MovieDetailActorCard(actor: CastActor, navController: NavHostController) {
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 4.dp)
+                    .padding(MovieCardDimensions.horizontalPadding)
             )
             Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightSmall))
             Text(

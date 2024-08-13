@@ -339,7 +339,7 @@ fun MovieDetailScreen(
 
                         item {
                             uiState.similarMovies?.let { similarMovies ->
-                                Spacer(modifier = Modifier.height(24.dp))
+                                Spacer(modifier = Modifier.height(Dimensions.spacerHeight24))
                                 Text(
                                     text = stringResource(R.string.similar_movies),
                                     fontSize = Dimensions.fontSizeMedium,
@@ -358,7 +358,7 @@ fun MovieDetailScreen(
                         }
                         item {
                             uiState.movieDetailActors?.let { movieDetailActors ->
-                                Spacer(modifier = Modifier.height(24.dp))
+                                Spacer(modifier = Modifier.height(Dimensions.spacerHeight24))
                                 Text(
                                     text = stringResource(R.string.cast),
                                     fontSize = Dimensions.fontSizeMedium,

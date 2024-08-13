@@ -5,7 +5,7 @@ import androidx.compose.ui.unit.sp
 
 object Dimensions {
     val horizontalPadding = 8.dp
-    val verticalPadding = 16.dp
+    val spacerHeight24 = 24.dp
     val spacerHeightSmall = 8.dp
     val spacerHeightMedium = 16.dp
     val spacerHeightLarge = 34.dp
@@ -62,4 +62,6 @@ object MovieCardDimensions {
     val subtitleFontSize = 14.sp
     val spacerHeightSmall = 4.dp
     val spacerHeightMedium = 8.dp
+    val horizontalPadding = 4.dp
+    val cardWidth = 180.dp
 }
