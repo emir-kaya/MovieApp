@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ActorRepository {
     fun getPopularActors(): Flow<PagingData<ActorItem>>
+
+    fun searchActors(query: String): Flow<PagingData<ActorItem>>
 }

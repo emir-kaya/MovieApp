@@ -117,6 +117,8 @@ dependencies {
 
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
 
+    implementation ("com.airbnb.android:lottie-compose:6.0.0")
+
 
 
 

@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.data.repository
 
+import com.emirkaya.movieapp.data.paging.SearchMoviesPagingSource
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -18,6 +19,13 @@ class MovieRepositoryImpl @Inject constructor(private val apiService: ApiService
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { MoviePagingSource(apiService) }
+        ).flow
+    }
+
+    override fun searchMovies(query: String): Flow<PagingData<MovieItem>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { SearchMoviesPagingSource(apiService, query) }
         ).flow
     }
 }

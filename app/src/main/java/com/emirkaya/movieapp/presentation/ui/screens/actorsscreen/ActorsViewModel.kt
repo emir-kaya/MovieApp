@@ -6,6 +6,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.emirkaya.movieapp.data.model.actor.ActorItem
 import com.emirkaya.movieapp.domain.usecase.GetPopularActorsUseCase
+import com.emirkaya.movieapp.domain.usecase.SearchActorsUseCase
+import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MoviesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,9 @@ data class ActorsUiState(
 )
 
 @HiltViewModel
-class ActorsViewModel @Inject constructor(private val getPopularActorsUseCase: GetPopularActorsUseCase) : ViewModel() {
+class ActorsViewModel @Inject constructor(
+    private val getPopularActorsUseCase: GetPopularActorsUseCase,
+    private val searchActorsUseCase: SearchActorsUseCase) : ViewModel() {
     private val _uiState = MutableStateFlow(ActorsUiState())
     val uiState: StateFlow<ActorsUiState> get() = _uiState
 
@@ -33,6 +37,16 @@ class ActorsViewModel @Inject constructor(private val getPopularActorsUseCase: G
             isLoading = false
         )
     }
-    
+    fun searchActors(query: String) {
+        if (query.isEmpty()) {
+            getPopularActors()
+        } else {
+            _uiState.value = ActorsUiState(
+                actorsFlow = searchActorsUseCase.execute(query).cachedIn(viewModelScope),
+                isLoading = false
+            )
+        }
+    }
+
 
 }
