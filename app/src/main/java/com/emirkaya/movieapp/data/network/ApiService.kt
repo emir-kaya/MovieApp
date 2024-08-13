@@ -2,11 +2,13 @@ package com.emirkaya.movieapp.data.network
 
 import com.emirkaya.movieapp.data.model.actor.PeopleResponse
 import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
+import com.emirkaya.movieapp.data.model.moivedetailactors.MovieDetailActorsResponse
 import com.emirkaya.movieapp.data.model.moviecredit.MovieCreditResponse
 import com.emirkaya.movieapp.data.model.moviemodel.MovieResponse
 import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
 import com.emirkaya.movieapp.data.model.movieimagemodel.ImageResponse
 import com.emirkaya.movieapp.data.model.movievideomodel.VideoResponse
+import com.emirkaya.movieapp.data.model.similarmovies.SimilarMovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -48,4 +50,13 @@ interface ApiService {
       @Path("actorId") actorId: Int
    ): Response<MovieCreditResponse>
 
+   @GET("movie/{movieId}/similar")
+   suspend fun getSimilarMovies(
+    @Path("movieId") movieId: Int
+   ): Response<SimilarMovieResponse>
+
+   @GET("movie/{movieId}/credits")
+   suspend fun getMovieDetailActors(
+       @Path("movieId") movieId: Int
+   ): Response<MovieDetailActorsResponse>
 }
