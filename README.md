@@ -2,10 +2,13 @@
 
 <table>
   <tr>
-    <td><h3 align="center"><img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/MovieDetailScreen.gif?ref_type=heads" alt="Açıklama" height="1200" width="500"></h3></td>
-  </tr>
-   <tr>
-    <td><h3 align="center"><img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/ActorDetailScreen.gif?ref_type=heads" alt="Açıklama" height="1200" width="500"></h3></td>
+    <td>
+      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/MovieDetailScreen.gif?ref_type=heads" alt="Açıklama" height="600" width="250">
+    </td>
+    <td>
+      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/ActorDetailScreen.gif?ref_type=heads" alt="Açıklama" height="800" width="300">
+    </td>
   </tr>
 </table>
+
 
