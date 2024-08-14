@@ -22,6 +22,7 @@ import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.ActorDeta
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MoviesScreen
 import com.emirkaya.movieapp.presentation.ui.screens.actorsscreen.ActorsScreen
+import com.emirkaya.movieapp.presentation.ui.screens.favoritesscreen.FavoritesScreen
 import com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen.MovieDetailScreen
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -43,6 +44,17 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
         ){
             setBottomBarVisible(true)
             MoviesScreen(navController)
+        }
+
+        composable(
+            route = Constants.FAVORITES,
+            enterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) }
+        ){
+            setBottomBarVisible(true)
+            FavoritesScreen(navController)
         }
 
 

@@ -7,11 +7,9 @@ import androidx.paging.cachedIn
 import com.emirkaya.movieapp.data.model.actor.ActorItem
 import com.emirkaya.movieapp.domain.usecase.GetPopularActorsUseCase
 import com.emirkaya.movieapp.domain.usecase.SearchActorsUseCase
-import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MoviesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ActorsUiState(
@@ -23,12 +21,16 @@ data class ActorsUiState(
 @HiltViewModel
 class ActorsViewModel @Inject constructor(
     private val getPopularActorsUseCase: GetPopularActorsUseCase,
-    private val searchActorsUseCase: SearchActorsUseCase) : ViewModel() {
+    private val searchActorsUseCase: SearchActorsUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow(ActorsUiState())
     val uiState: StateFlow<ActorsUiState> get() = _uiState
 
+    private val _searchQuery = MutableStateFlow("")
+
     init {
         getPopularActors()
+        setupSearch()
     }
 
     fun getPopularActors() {
@@ -37,16 +39,26 @@ class ActorsViewModel @Inject constructor(
             isLoading = false
         )
     }
+
     fun searchActors(query: String) {
-        if (query.isEmpty()) {
-            getPopularActors()
-        } else {
-            _uiState.value = ActorsUiState(
-                actorsFlow = searchActorsUseCase.execute(query).cachedIn(viewModelScope),
-                isLoading = false
-            )
-        }
+        _searchQuery.value = query
     }
 
-
+    private fun setupSearch() {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(500)
+                .distinctUntilChanged()
+                .collect { query ->
+                    if (query.isEmpty()) {
+                        getPopularActors()
+                    } else {
+                        _uiState.value = ActorsUiState(
+                            actorsFlow = searchActorsUseCase.execute(query).cachedIn(viewModelScope),
+                            isLoading = false
+                        )
+                    }
+                }
+        }
+    }
 }

@@ -9,9 +9,8 @@ import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.emirkaya.movieapp.domain.usecase.GetPopularMoviesUseCase
 import com.emirkaya.movieapp.domain.usecase.SearchMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MoviesUiState(
@@ -27,9 +26,12 @@ class MoviesViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MoviesUiState())
     val uiState: StateFlow<MoviesUiState> get() = _uiState
-    //usecase viewmodel bağla flow...
+
+    private val _searchQuery = MutableStateFlow("")
+
     init {
         getPopularMovies()
+        setupSearch()
     }
 
     private fun getPopularMovies() {
@@ -38,15 +40,26 @@ class MoviesViewModel @Inject constructor(
             isLoading = false
         )
     }
+
     fun searchMovies(query: String) {
-        if (query.isEmpty()) {
-            getPopularMovies()
-        } else {
-            _uiState.value = MoviesUiState(
-                moviesFlow = searchMoviesUseCase.execute(query).cachedIn(viewModelScope),
-                isLoading = false
-            )
+        _searchQuery.value = query
+    }
+
+    private fun setupSearch() {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(500)
+                .distinctUntilChanged()
+                .collect { query ->
+                    if (query.isEmpty()) {
+                        getPopularMovies()
+                    } else {
+                        _uiState.value = MoviesUiState(
+                            moviesFlow = searchMoviesUseCase.execute(query).cachedIn(viewModelScope),
+                            isLoading = false
+                        )
+                    }
+                }
         }
     }
 }
-

@@ -73,7 +73,7 @@ fun MovieDetailScreen(
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when {
             uiState.isLoading -> {
-                CircularProgressIndicator() //lottie extension
+                CircularProgressIndicator()
             }
             uiState.error != null -> {
                 Text(
@@ -160,35 +160,67 @@ fun MovieDetailScreen(
 
                     Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = Dimensions.spacerHeightSmall),
-                        horizontalArrangement = Arrangement.Center
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        repeat(uiState.fullStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_fullstar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
-                            )
+                        Spacer(modifier = Modifier.weight(0.6f))
+                        Row(
+                            modifier = Modifier
+                                .weight(3f)
+                                .wrapContentWidth(Alignment.CenterHorizontally),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            repeat(uiState.fullStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_fullstar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
+                            repeat(uiState.halfStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_halfstar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
+                            repeat(uiState.emptyStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_emptystar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
                         }
-                        repeat(uiState.halfStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_halfstar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
-                            )
-                        }
-                        repeat(uiState.emptyStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_emptystar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
+
+                        IconButton(
+                            onClick = {
+                                if (uiState.isFavorite) {
+                                    viewModel.handleEvent(MovieDetailUiEvent.RemoveFavorite(movieId))
+                                } else {
+                                    viewModel.handleEvent(MovieDetailUiEvent.AddFavorite(movieId))
+                                }
+                            },
+                            modifier = Modifier
+                                .wrapContentWidth(Alignment.End)
+                                .padding(end = 16.dp)
+                        ) {
+                            Icon(
+                                modifier = Modifier.padding(3.dp).wrapContentSize(),
+                                painter = painterResource(
+                                    id = if (uiState.isFavorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+                                ),
+                                contentDescription = if (uiState.isFavorite) "Remove from favorites" else "Add to favorites",
+                                tint = Color.Black
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
                     LazyColumn(
@@ -328,7 +360,10 @@ fun MovieDetailScreen(
                                         modifier = Modifier
                                             .align(Alignment.Center)
                                             .size(Dimensions.playButtonSize)
-                                            .background(Color.Black.copy(Dimensions.playButtonBackgroundAlpha), CircleShape)
+                                            .background(
+                                                Color.Black.copy(Dimensions.playButtonBackgroundAlpha),
+                                                CircleShape
+                                            )
                                             .padding(Dimensions.playButtonPadding),
                                         tint = Color.White
                                     )
