@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
 object BottomNavItems {
     val items = listOf(
         BottomNavItem(Constants.MOVIES, R.drawable.ic_movies, "Movies"),
+        BottomNavItem(Constants.FAVORITES, R.drawable.ic_favorite_screen, "Favorites"),
         BottomNavItem(Constants.ACTORS, R.drawable.ic_actors, "Actors")
     )
 }

@@ -13,7 +13,22 @@ import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.component
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components.Title
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components.Toolbar
 import com.emirkaya.movieapp.presentation.ui.theme.ActorDetailDimensions
+@Composable
+fun ActorDetailRoute(
+    navController: NavHostController,
+    actorId: Int,
+    viewModel: ActorDetailViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val movieCredits = uiState.movieCredits ?: emptyList()
 
+    ActorDetailScreen(
+        navController = navController,
+        actorId = actorId,
+        movieCredits = movieCredits,
+        viewModel = viewModel
+    )
+}
 
 @Composable
 fun ActorDetailScreen(

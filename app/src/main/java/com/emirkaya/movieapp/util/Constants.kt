@@ -5,6 +5,7 @@ import com.emirkaya.movieapp.BuildConfig
 object Constants {
     const val MOVIES = "movies"
     const val ACTORS = "actors"
+    const val FAVORITES = "favorites"
     const val MOVIE_DETAIL = "movie_detail"
     const val ACTOR_DETAIL = "actor_detail"
     const val BASE_URL = "https://api.themoviedb.org/3/"

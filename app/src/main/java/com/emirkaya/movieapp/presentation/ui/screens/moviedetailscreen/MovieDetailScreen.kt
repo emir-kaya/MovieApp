@@ -52,13 +52,25 @@ import com.skydoves.landscapist.glide.GlideImage
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-
+@Composable
+fun MovieDetailRoute(
+    navController: NavHostController,
+    movieId: Int,
+    viewModel: MovieDetailViewModel = hiltViewModel()
+) {
+    MovieDetailScreen(
+        navController = navController,
+        movieId = movieId,
+        onEvent = viewModel::handleEvent
+    )
+}
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailScreen(
     navController: NavHostController,
     movieId: Int,
+    onEvent: (MovieDetailUiEvent) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -73,7 +85,7 @@ fun MovieDetailScreen(
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         when {
             uiState.isLoading -> {
-                CircularProgressIndicator() //lottie extension
+                CircularProgressIndicator()
             }
             uiState.error != null -> {
                 Text(
@@ -160,35 +172,67 @@ fun MovieDetailScreen(
 
                     Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = Dimensions.spacerHeightSmall),
-                        horizontalArrangement = Arrangement.Center
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        repeat(uiState.fullStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_fullstar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
-                            )
+                        Spacer(modifier = Modifier.weight(0.6f))
+                        Row(
+                            modifier = Modifier
+                                .weight(3f)
+                                .wrapContentWidth(Alignment.CenterHorizontally),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            repeat(uiState.fullStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_fullstar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
+                            repeat(uiState.halfStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_halfstar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
+                            repeat(uiState.emptyStars) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_emptystar),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(Dimensions.starIconSize)
+                                )
+                            }
                         }
-                        repeat(uiState.halfStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_halfstar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
-                            )
-                        }
-                        repeat(uiState.emptyStars) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_emptystar),
-                                contentDescription = null,
-                                modifier = Modifier.size(Dimensions.starIconSize)
+
+                        IconButton(
+                            onClick = {
+                                if (uiState.isFavorite) {
+                                    onEvent(MovieDetailUiEvent.RemoveFavorite(movieId))
+                                } else {
+                                    onEvent(MovieDetailUiEvent.AddFavorite(movieId))
+                                }
+                            },
+                            modifier = Modifier
+                                .wrapContentWidth(Alignment.End)
+                                .padding(end = 16.dp)
+                        ) {
+                            Icon(
+                                modifier = Modifier.padding(3.dp).wrapContentSize(),
+                                painter = painterResource(
+                                    id = if (uiState.isFavorite) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+                                ),
+                                contentDescription = if (uiState.isFavorite) "Remove from favorites" else "Add to favorites",
+                                tint = Color.Black
                             )
                         }
                     }
-
                     Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
 
                     LazyColumn(
@@ -286,7 +330,7 @@ fun MovieDetailScreen(
                                     )
                                     if (isOverviewLong) {
                                         IconButton(
-                                            onClick = { viewModel.handleEvent(MovieDetailUiEvent.ToggleOverviewExpansion) },
+                                            onClick = { onEvent(MovieDetailUiEvent.ToggleOverviewExpansion) },
                                             modifier = Modifier.align(Alignment.End)
                                         ) {
                                             Icon(
@@ -328,7 +372,10 @@ fun MovieDetailScreen(
                                         modifier = Modifier
                                             .align(Alignment.Center)
                                             .size(Dimensions.playButtonSize)
-                                            .background(Color.Black.copy(Dimensions.playButtonBackgroundAlpha), CircleShape)
+                                            .background(
+                                                Color.Black.copy(Dimensions.playButtonBackgroundAlpha),
+                                                CircleShape
+                                            )
                                             .padding(Dimensions.playButtonPadding),
                                         tint = Color.White
                                     )
@@ -386,10 +433,5 @@ fun MovieDetailScreen(
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun MovieDetailScreenPreview() {
-    MovieDetailScreen(navController = rememberNavController(), movieId = 1)
-}
 
 

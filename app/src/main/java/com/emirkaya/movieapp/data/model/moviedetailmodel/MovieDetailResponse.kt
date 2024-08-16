@@ -22,4 +22,8 @@ data class MovieDetailResponse(
     val voteAverage: Double?,
     @SerializedName("genres")
     val genres: List<Genre?>?,
+    @SerializedName("poster_path")
+    val posterPath: String?,
+    @SerializedName("id")
+    val movieId: Int?
 )

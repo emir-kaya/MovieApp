@@ -14,15 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
+import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.ActorDetailRoute
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.ActorDetailScreen
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.ActorDetailViewModel
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MoviesScreen
 import com.emirkaya.movieapp.presentation.ui.screens.actorsscreen.ActorsScreen
-import com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen.MovieDetailScreen
+import com.emirkaya.movieapp.presentation.ui.screens.favoritesscreen.FavoritesScreen
+import com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen.MovieDetailRoute
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -43,6 +43,17 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
         ){
             setBottomBarVisible(true)
             MoviesScreen(navController)
+        }
+
+        composable(
+            route = Constants.FAVORITES,
+            enterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) }
+        ){
+            setBottomBarVisible(true)
+            FavoritesScreen(navController)
         }
 
 
@@ -66,7 +77,7 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
         ){ backStackEntry ->
             setBottomBarVisible(false)
             val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
-            MovieDetailScreen(navController, movieId)
+            MovieDetailRoute(navController = navController, movieId = movieId)
         }
 
 
@@ -75,14 +86,10 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
             arguments = listOf(navArgument("actorId") { type = NavType.IntType }),
             enterTransition = { fadeIn() + scaleIn() },
             exitTransition = { fadeOut() + scaleOut() }
-        ){
-            backStackEntry ->
+        ) { backStackEntry ->
             setBottomBarVisible(false)
             val actorId = backStackEntry.arguments?.getInt("actorId") ?: 0
-            val viewModel: ActorDetailViewModel = hiltViewModel()
-            val uiState by viewModel.uiState.collectAsState()
-            val movieCredits = uiState.movieCredits ?: emptyList()
-            ActorDetailScreen(navController, actorId, movieCredits)
+            ActorDetailRoute(navController = navController, actorId = actorId)
         }
     }
 }

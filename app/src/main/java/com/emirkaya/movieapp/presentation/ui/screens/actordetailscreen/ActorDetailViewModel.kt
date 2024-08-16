@@ -2,24 +2,13 @@ package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
-import com.emirkaya.movieapp.data.model.moviecredit.Cast
-import com.emirkaya.movieapp.data.model.moviemodel.MovieItem
 import com.emirkaya.movieapp.domain.usecase.GetActorDetailUseCase
 import com.emirkaya.movieapp.domain.usecase.GetActorMovieCreditsUseCase
-import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class ActorDetailUiState(
-    val actorDetail: ActorDetailResponse? = null,
-    val movieCredits: List<Cast>? = null,
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
 
 @HiltViewModel
 class ActorDetailViewModel @Inject constructor(
