@@ -13,17 +13,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MoviesUiState(
-    val moviesFlow: Flow<PagingData<MovieItem>>? = null,
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
-
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val searchMoviesUseCase: SearchMoviesUseCase
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow(MoviesUiState())
     val uiState: StateFlow<MoviesUiState> get() = _uiState
 

@@ -2,9 +2,6 @@ package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.emirkaya.movieapp.data.model.moivedetailactors.CastActor
-import com.emirkaya.movieapp.data.model.moviedetailmodel.MovieDetailResponse
-import com.emirkaya.movieapp.data.model.similarmovies.SimilarMovie
 import com.emirkaya.movieapp.domain.model.FavoriteMovie
 import com.emirkaya.movieapp.domain.usecase.GetMovieDetailActorsUseCase
 import com.emirkaya.movieapp.domain.usecase.GetMovieDetailUseCase
@@ -18,29 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class MovieDetailUiState(
-    val movieDetail: MovieDetailResponse? = null,
-    val teaserVideoKey: String? = null,
-    val isLoading: Boolean = false,
-    val error: String? = null,
-    val backdrops: List<String>? = null,
-    val fullStars: Int = 0,
-    val halfStars: Int = 0,
-    val emptyStars: Int = 0,
-    val productionCompany: String? = null,
-    val language: String? = null,
-    val isExpanded: Boolean = false,
-    val isFavorite: Boolean = false,
-    val similarMovies: List<SimilarMovie>? = null,
-    val movieDetailActors: List<CastActor>? = null
-)
-
-sealed class MovieDetailUiEvent {
-    data object ToggleOverviewExpansion : MovieDetailUiEvent()
-    data class AddFavorite(val movieId: Int) : MovieDetailUiEvent()
-    data class RemoveFavorite(val movieId: Int) : MovieDetailUiEvent()
-}
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
@@ -94,18 +68,10 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun toggleOverviewExpansion() {
-        _uiState.value = _uiState.value.copy(
-            isExpanded = !_uiState.value.isExpanded
-        )
-    }
-
     fun handleEvent(event: MovieDetailUiEvent) {
         when (event) {
             is MovieDetailUiEvent.ToggleOverviewExpansion -> {
-                _uiState.value = _uiState.value.copy(
-                    isExpanded = !_uiState.value.isExpanded
-                )
+                toggleOverviewExpansion()
             }
             is MovieDetailUiEvent.AddFavorite -> {
                 addFavorite(event.movieId)
@@ -116,8 +82,13 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
+    private fun toggleOverviewExpansion() {
+        _uiState.value = _uiState.value.copy(
+            isExpanded = !_uiState.value.isExpanded
+        )
+    }
 
-    fun addFavorite(movieId: Int) {
+    private fun addFavorite(movieId: Int) {
         viewModelScope.launch {
             val movieDetail = _uiState.value.movieDetail
             movieDetail?.let {
@@ -134,7 +105,7 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun removeFavorite(movieId: Int) {
+    private fun removeFavorite(movieId: Int) {
         viewModelScope.launch {
             val movieDetail = _uiState.value.movieDetail
             movieDetail?.let {
