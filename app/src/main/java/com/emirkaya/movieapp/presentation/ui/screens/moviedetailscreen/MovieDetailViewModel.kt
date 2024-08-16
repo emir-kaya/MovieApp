@@ -35,8 +35,9 @@ data class MovieDetailUiState(
     val similarMovies: List<SimilarMovie>? = null,
     val movieDetailActors: List<CastActor>? = null
 )
+
 sealed class MovieDetailUiEvent {
-    object ToggleOverviewExpansion : MovieDetailUiEvent()
+    data object ToggleOverviewExpansion : MovieDetailUiEvent()
     data class AddFavorite(val movieId: Int) : MovieDetailUiEvent()
     data class RemoveFavorite(val movieId: Int) : MovieDetailUiEvent()
 }
@@ -93,6 +94,12 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
+    fun toggleOverviewExpansion() {
+        _uiState.value = _uiState.value.copy(
+            isExpanded = !_uiState.value.isExpanded
+        )
+    }
+
     fun handleEvent(event: MovieDetailUiEvent) {
         when (event) {
             is MovieDetailUiEvent.ToggleOverviewExpansion -> {
@@ -109,7 +116,8 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    private fun addFavorite(movieId: Int) {
+
+    fun addFavorite(movieId: Int) {
         viewModelScope.launch {
             val movieDetail = _uiState.value.movieDetail
             movieDetail?.let {
@@ -126,7 +134,7 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    private fun removeFavorite(movieId: Int) {
+    fun removeFavorite(movieId: Int) {
         viewModelScope.launch {
             val movieDetail = _uiState.value.movieDetail
             movieDetail?.let {
@@ -150,4 +158,3 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 }
-

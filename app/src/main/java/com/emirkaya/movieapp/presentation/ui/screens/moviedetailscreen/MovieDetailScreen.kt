@@ -52,13 +52,25 @@ import com.skydoves.landscapist.glide.GlideImage
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-
+@Composable
+fun MovieDetailRoute(
+    navController: NavHostController,
+    movieId: Int,
+    viewModel: MovieDetailViewModel = hiltViewModel()
+) {
+    MovieDetailScreen(
+        navController = navController,
+        movieId = movieId,
+        onEvent = viewModel::handleEvent
+    )
+}
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailScreen(
     navController: NavHostController,
     movieId: Int,
+    onEvent: (MovieDetailUiEvent) -> Unit,
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -202,9 +214,9 @@ fun MovieDetailScreen(
                         IconButton(
                             onClick = {
                                 if (uiState.isFavorite) {
-                                    viewModel.handleEvent(MovieDetailUiEvent.RemoveFavorite(movieId))
+                                    onEvent(MovieDetailUiEvent.RemoveFavorite(movieId))
                                 } else {
-                                    viewModel.handleEvent(MovieDetailUiEvent.AddFavorite(movieId))
+                                    onEvent(MovieDetailUiEvent.AddFavorite(movieId))
                                 }
                             },
                             modifier = Modifier
@@ -318,7 +330,7 @@ fun MovieDetailScreen(
                                     )
                                     if (isOverviewLong) {
                                         IconButton(
-                                            onClick = { viewModel.handleEvent(MovieDetailUiEvent.ToggleOverviewExpansion) },
+                                            onClick = { onEvent(MovieDetailUiEvent.ToggleOverviewExpansion) },
                                             modifier = Modifier.align(Alignment.End)
                                         ) {
                                             Icon(
@@ -421,10 +433,5 @@ fun MovieDetailScreen(
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun MovieDetailScreenPreview() {
-    MovieDetailScreen(navController = rememberNavController(), movieId = 1)
-}
 
 
