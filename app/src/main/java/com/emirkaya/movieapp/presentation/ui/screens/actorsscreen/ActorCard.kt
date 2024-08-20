@@ -19,6 +19,7 @@ import com.emirkaya.movieapp.presentation.ui.theme.ActorCardDimensions
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
+
 enum class Gender {
     FEMALE,
     MALE,
@@ -35,8 +36,9 @@ enum class Gender {
         }
     }
 }
+
 @Composable
-fun ActorCard(actor: ActorItem, navController: NavHostController) {
+fun ActorCard(actor: ActorItem, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(ActorCardDimensions.cornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = ActorCardDimensions.elevation),
@@ -44,9 +46,7 @@ fun ActorCard(actor: ActorItem, navController: NavHostController) {
             .padding(ActorCardDimensions.padding)
             .fillMaxWidth()
             .height(ActorCardDimensions.height)
-            .clickable {
-                navController.navigate("${Constants.ACTOR_DETAIL}/${actor.id}")
-            }
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier

@@ -34,7 +34,6 @@ import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
 import com.emirkaya.movieapp.data.model.moviecredit.Cast
 
-import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.MovieCreditCard
 import com.emirkaya.movieapp.presentation.ui.theme.ActorDetailDimensions
 
 
@@ -44,7 +43,7 @@ fun Body(
     actorDetail: ActorDetailResponse,
     headerHeight: Dp,
     movieCredits: List<Cast>,
-    navController: NavHostController,
+    onMovieClick: (Int) -> Unit,
     isExpanded: Boolean,
     isBiographyLong: Boolean,
     onExpandToggle: () -> Unit
@@ -111,7 +110,7 @@ fun Body(
                     contentPadding = PaddingValues(horizontal = ActorDetailDimensions.horizontalPadding)
                 ) {
                     items(movieCredits) { movie ->
-                        MovieCreditCard(movie, navController)
+                        MovieCreditCard(movie, onClick = { onMovieClick(movie.id!!) })
                     }
                 }
             }

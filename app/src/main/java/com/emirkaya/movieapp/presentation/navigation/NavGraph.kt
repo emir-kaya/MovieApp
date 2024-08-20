@@ -42,7 +42,9 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
             popExitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) }
         ){
             setBottomBarVisible(true)
-            MoviesScreen(navController)
+            MoviesScreen(onNavigateToMovieDetail = { movieId ->
+                navController.navigate("${Constants.MOVIE_DETAIL}/$movieId")
+            })
         }
 
         composable(
@@ -53,7 +55,9 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
             popExitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) }
         ){
             setBottomBarVisible(true)
-            FavoritesScreen(navController)
+            FavoritesScreen(onNavigateToMovieDetail = { movieId ->
+                navController.navigate("${Constants.MOVIE_DETAIL}/$movieId")
+            })
         }
 
 
@@ -65,7 +69,9 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
             popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }
         ){
             setBottomBarVisible(true)
-            ActorsScreen(navController)
+            ActorsScreen(onNavigateToActorDetail = { actorId ->
+                navController.navigate("${Constants.ACTOR_DETAIL}/$actorId")
+            })
         }
 
 
@@ -77,7 +83,16 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
         ){ backStackEntry ->
             setBottomBarVisible(false)
             val movieId = backStackEntry.arguments?.getInt("movieId") ?: 0
-            MovieDetailRoute(navController = navController, movieId = movieId)
+
+            MovieDetailRoute(
+                movieId = movieId,
+                onNavigateToActorDetail = { actorId ->
+                    navController.navigate("${Constants.ACTOR_DETAIL}/$actorId")
+                },
+                onNavigateToSimilarMovieDetail = { similarMovieId ->
+                    navController.navigate("${Constants.MOVIE_DETAIL}/$similarMovieId")
+                }
+            )
         }
 
 
@@ -86,10 +101,15 @@ fun NavGraph(navController: NavHostController = rememberAnimatedNavController(),
             arguments = listOf(navArgument("actorId") { type = NavType.IntType }),
             enterTransition = { fadeIn() + scaleIn() },
             exitTransition = { fadeOut() + scaleOut() }
-        ) { backStackEntry ->
+        ) {  backStackEntry ->
             setBottomBarVisible(false)
             val actorId = backStackEntry.arguments?.getInt("actorId") ?: 0
-            ActorDetailRoute(navController = navController, actorId = actorId)
+            ActorDetailRoute(
+                actorId = actorId,
+                onNavigateToActorMovieDetail = { movieId ->
+                    navController.navigate("${Constants.MOVIE_DETAIL}/$movieId")
+                }
+            )
         }
     }
 }

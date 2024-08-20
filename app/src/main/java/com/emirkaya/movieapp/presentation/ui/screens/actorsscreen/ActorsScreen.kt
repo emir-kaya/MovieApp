@@ -22,7 +22,7 @@ import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.presentation.ui.screens.SearchBar
 
 @Composable
-fun ActorsScreen(navController: NavHostController, viewModel: ActorsViewModel = hiltViewModel()) {
+fun ActorsScreen(onNavigateToActorDetail: (Int) -> Unit, viewModel: ActorsViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     val actorsPagingData = uiState.actorsFlow?.collectAsLazyPagingItems()
     var query by remember { mutableStateOf("") }
@@ -56,7 +56,7 @@ fun ActorsScreen(navController: NavHostController, viewModel: ActorsViewModel = 
                     items(actorsPagingData.itemCount) { index ->
                         val actor = actorsPagingData[index]
                         actor?.let {
-                            ActorCard(actor = it, navController = navController)
+                            ActorCard(actor = it,  onClick = { onNavigateToActorDetail(it.id!!) })
                         }
                     }
                 }

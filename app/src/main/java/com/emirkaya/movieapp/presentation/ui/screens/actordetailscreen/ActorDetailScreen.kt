@@ -13,9 +13,11 @@ import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.component
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components.Title
 import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components.Toolbar
 import com.emirkaya.movieapp.presentation.ui.theme.ActorDetailDimensions
+import com.emirkaya.movieapp.util.Constants
+
 @Composable
 fun ActorDetailRoute(
-    navController: NavHostController,
+    onNavigateToActorMovieDetail: (Int) -> Unit,
     actorId: Int,
     viewModel: ActorDetailViewModel = hiltViewModel()
 ) {
@@ -23,18 +25,16 @@ fun ActorDetailRoute(
     val movieCredits = uiState.movieCredits ?: emptyList()
 
     ActorDetailScreen(
-        navController = navController,
         actorId = actorId,
-        movieCredits = movieCredits,
+        onNavigateToActorMovieDetail = onNavigateToActorMovieDetail,
         viewModel = viewModel
     )
 }
 
 @Composable
 fun ActorDetailScreen(
-    navController: NavHostController,
+    onNavigateToActorMovieDetail: (Int) -> Unit,
     actorId: Int,
-    movieCredits: List<Cast>,
     viewModel: ActorDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -57,13 +57,13 @@ fun ActorDetailScreen(
                 actorDetail = actorDetail,
                 headerHeight = headerHeight,
                 movieCredits = uiState.movieCredits ?: emptyList(),
-                navController = navController,
+                onMovieClick = onNavigateToActorMovieDetail,
                 isExpanded = isExpanded,
                 isBiographyLong = viewModel.isBiographyLong,
                 onExpandToggle = { viewModel.toggleBiographyExpansion() }
             )
             Header(scrollState, headerHeightPx, actorDetail.profilePath)
-            Toolbar(scrollState, headerHeightPx, toolbarHeightPx, navController)
+            Toolbar(scrollState, headerHeightPx, toolbarHeightPx)
             Title(scrollState, headerHeightPx, toolbarHeightPx, actorDetail.name!!)
         }
     }

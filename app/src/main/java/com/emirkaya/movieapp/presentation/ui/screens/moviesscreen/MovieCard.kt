@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.moviesscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,7 @@ import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun MovieCard(movie: MovieItem, navController: NavHostController) {
+fun MovieCard(movie: MovieItem,  onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(MovieCardDimensions.cardCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
@@ -35,7 +36,7 @@ fun MovieCard(movie: MovieItem, navController: NavHostController) {
             .padding(MovieCardDimensions.cardPadding)
             .fillMaxWidth()
             .height(MovieCardDimensions.cardHeight)
-            .clickable { navController.navigate("${Constants.MOVIE_DETAIL}/${movie.id}") }
+            .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(MovieCardDimensions.cardPadding)) {
             GlideImage(

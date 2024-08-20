@@ -1,10 +1,9 @@
-package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
+package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen.components
 
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.similarmovies.SimilarMovie
@@ -30,7 +28,7 @@ import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun SimilarMovieCard(movie: SimilarMovie, navController: NavHostController) {
+fun SimilarMovieCard(movie: SimilarMovie, onNavigateToSimilarMovieDetail: (Int) -> Unit) {
     Card(
         shape = RoundedCornerShape(MovieCardDimensions.cardCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
@@ -38,7 +36,7 @@ fun SimilarMovieCard(movie: SimilarMovie, navController: NavHostController) {
             .padding(MovieCardDimensions.cardPadding)
             .width(MovieCardDimensions.cardWidth)
             .height(MovieCardDimensions.cardHeight)
-            .clickable { navController.navigate("${Constants.MOVIE_DETAIL}/${movie.id}") }
+            .clickable { onNavigateToSimilarMovieDetail(movie.id) }
     ) {
         Column(modifier = Modifier.padding(MovieCardDimensions.cardPadding)) {
             GlideImage(

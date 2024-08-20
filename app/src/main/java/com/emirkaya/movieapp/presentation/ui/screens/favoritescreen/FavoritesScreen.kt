@@ -18,7 +18,7 @@ import com.emirkaya.movieapp.presentation.ui.screens.favoritescreen.FavoritesVie
 import com.emirkaya.movieapp.presentation.ui.screens.moviesscreen.MovieCard
 
 @Composable
-fun FavoritesScreen(navController: NavHostController, viewModel: FavoritesViewModel = hiltViewModel()) {
+fun FavoritesScreen(onNavigateToMovieDetail: (Int) -> Unit, viewModel: FavoritesViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -39,7 +39,7 @@ fun FavoritesScreen(navController: NavHostController, viewModel: FavoritesViewMo
                 ) {
                     items(uiState.favoriteMovies.size) { index ->
                         val movie = uiState.favoriteMovies[index]
-                        MovieCard(movie = movie.toMovieItem(), navController = navController)
+                        MovieCard(movie = movie.toMovieItem(), onClick = { onNavigateToMovieDetail(movie.toMovieItem().id) })
                     }
                 }
             }

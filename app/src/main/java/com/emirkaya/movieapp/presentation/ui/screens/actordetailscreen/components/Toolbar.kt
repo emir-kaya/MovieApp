@@ -19,7 +19,6 @@ fun Toolbar(
     scroll: ScrollState,
     headerHeightPx: Float,
     toolbarHeightPx: Float,
-    navController: NavHostController
 ) {
     val toolbarBottom = headerHeightPx - toolbarHeightPx
     val showToolbar by remember { derivedStateOf { scroll.value >= toolbarBottom } }
