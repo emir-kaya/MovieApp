@@ -38,11 +38,12 @@ fun SearchBar(
             .padding(horizontal = SearchBarDimensions.paddingHorizontal, vertical = SearchBarDimensions.paddingVertical)
             .background(Color.Transparent),
         shape = CircleShape,
-        elevation = SearchBarDimensions.elevation
+        elevation = SearchBarDimensions.elevation,
+
     ) {
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colors.surface, CircleShape)
+                .background(androidx.compose.material3.MaterialTheme.colorScheme.surface, CircleShape)
                 .padding(horizontal = SearchBarDimensions.textFieldPaddingHorizontal, vertical = SearchBarDimensions.textFieldPaddingVertical)
                 .fillMaxWidth(),
             contentAlignment = Alignment.CenterStart

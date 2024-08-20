@@ -42,6 +42,7 @@ fun ActorCard(actor: ActorItem, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(ActorCardDimensions.cornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = ActorCardDimensions.elevation),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSecondary),
         modifier = Modifier
             .padding(ActorCardDimensions.padding)
             .fillMaxWidth()

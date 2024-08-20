@@ -1,7 +1,9 @@
 package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -51,7 +53,9 @@ fun ActorDetailScreen(
         val toolbarHeight = ActorDetailDimensions.toolbarHeight
         val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.toPx() }
 
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)) {
             Body(
                 scrollState = scrollState,
                 actorDetail = actorDetail,

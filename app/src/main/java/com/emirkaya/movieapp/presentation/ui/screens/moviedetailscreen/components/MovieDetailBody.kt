@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -104,7 +105,7 @@ fun MovieDetailBody(
                     Text(
                         text = it,
                         fontSize = Dimensions.fontSizeMedium,
-                        color = Color.Black,
+                        color = Color.Gray,
                         modifier = Modifier.padding(end = Dimensions.chipPadding)
                     )
                 }
@@ -134,7 +135,7 @@ fun MovieDetailBody(
         item {
             Card(
                 shape = RoundedCornerShape(Dimensions.cardCornerRadius),
-                backgroundColor = Color.LightGray,
+                backgroundColor = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .animateContentSize()
@@ -147,7 +148,7 @@ fun MovieDetailBody(
                         text = uiState.movieDetail?.overview
                             ?: stringResource(id = R.string.overview_not_available),
                         fontSize = Dimensions.fontSizeMedium,
-                        color = Color.Gray,
+                        color = Color.LightGray,
                         maxLines = if (uiState.isExpanded) Int.MAX_VALUE else 2,
                         overflow = if (uiState.isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
                     )
@@ -216,7 +217,7 @@ fun MovieDetailBody(
                     text = stringResource(R.string.similar_movies),
                     fontSize = Dimensions.fontSizeMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = Color.LightGray
                 )
                 Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
                 LazyRow(
@@ -238,7 +239,7 @@ fun MovieDetailBody(
                     text = stringResource(R.string.cast),
                     fontSize = Dimensions.fontSizeMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = Color.LightGray
                 )
                 Spacer(modifier = Modifier.height(Dimensions.spacerHeightSmall))
                 LazyRow(

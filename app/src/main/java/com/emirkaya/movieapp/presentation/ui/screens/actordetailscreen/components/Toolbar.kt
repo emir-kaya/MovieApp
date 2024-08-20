@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -30,8 +31,8 @@ fun Toolbar(
     ) {
         TopAppBar(
             title = {},
-            backgroundColor = Color.LightGray,
-            contentColor = Color.White,
+            backgroundColor = MaterialTheme.colorScheme.background,
+            contentColor = Color.LightGray,
             elevation = 0.dp
         )
     }

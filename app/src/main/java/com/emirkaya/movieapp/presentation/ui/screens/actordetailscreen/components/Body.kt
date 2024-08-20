@@ -2,6 +2,7 @@ package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.componen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,32 +52,40 @@ fun Body(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.verticalScroll(scrollState)
+        modifier = Modifier
+            .verticalScroll(scrollState)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(Modifier.height(headerHeight))
 
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = ActorDetailDimensions.cardPadding),
+                .padding(top = ActorDetailDimensions.cardPadding)
+                .background(MaterialTheme.colorScheme.background),
             shape = RoundedCornerShape(topStart = ActorDetailDimensions.cardCornerRadius, topEnd = ActorDetailDimensions.cardCornerRadius),
             elevation = ActorDetailDimensions.cardElevation
         ) {
-            Column(modifier = Modifier.padding(ActorDetailDimensions.cardPadding)) {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(ActorDetailDimensions.cardPadding))
+                     {
                 ActorDetailHeader(actorDetail)
                 Spacer(modifier = Modifier.height(ActorDetailDimensions.spacerHeightMedium))
 
                 Text(
                     text = "Biography",
                     fontSize = ActorDetailDimensions.fontSizeTitle,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.LightGray
                 )
 
                 Spacer(modifier = Modifier.height(ActorDetailDimensions.spacerHeightSmall))
 
                 Card(
                     shape = RoundedCornerShape(ActorDetailDimensions.cardCornerRadius),
-                    backgroundColor = Color.LightGray,
+                    backgroundColor = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateContentSize()

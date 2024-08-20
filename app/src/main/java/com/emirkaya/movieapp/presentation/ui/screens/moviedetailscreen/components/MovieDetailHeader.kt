@@ -16,6 +16,7 @@ import androidx.compose.material.Chip
 import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,7 +90,7 @@ fun MovieDetailHeader(
             text = movie?.title ?: stringResource(id = R.string.title_not_available),
             fontSize = Dimensions.fontSizeTitle,
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            color = Color.LightGray,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
@@ -109,9 +110,9 @@ fun MovieDetailHeader(
                         onClick = {},
                         modifier = Modifier.padding(Dimensions.chipPadding),
                         shape = RoundedCornerShape(Dimensions.cardCornerRadius),
-                        colors = ChipDefaults.chipColors(backgroundColor = Color.LightGray)
+                        colors = ChipDefaults.chipColors(backgroundColor = MaterialTheme.colorScheme.onSecondary)
                     ) {
-                        Text(text = name, color = Color.Black)
+                        Text(text = name, color = Color.LightGray)
                     }
                 }
             }

@@ -1,8 +1,10 @@
 package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -55,7 +57,10 @@ fun MovieDetailScreen(
 
     val pagerState = rememberPagerState()
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+    Box(modifier = Modifier.fillMaxSize()
+        .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.TopCenter) {
+
         when {
             uiState.isLoading -> {
                 CircularProgressIndicator()

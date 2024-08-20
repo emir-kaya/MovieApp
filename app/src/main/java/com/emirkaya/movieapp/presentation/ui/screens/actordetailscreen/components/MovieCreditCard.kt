@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ fun MovieCreditCard(movie: Cast, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(MovieCardDimensions.cardCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSecondary),
         modifier = Modifier
             .padding(MovieCardDimensions.cardPadding)
             .width(180.dp)

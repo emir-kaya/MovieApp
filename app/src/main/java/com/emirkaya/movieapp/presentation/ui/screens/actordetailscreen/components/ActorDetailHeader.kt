@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +24,7 @@ fun ActorDetailHeader(actorDetail: ActorDetailResponse) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
             .padding(bottom = ActorDetailDimensions.spacerHeightSmall),
         horizontalArrangement = Arrangement.Center
     ) {
