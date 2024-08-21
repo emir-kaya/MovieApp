@@ -5,4 +5,5 @@ data class FavoriteMovieUseCases(
     val removeFavoriteMovie: RemoveFavoriteMovie,
     val getFavoriteMovie: GetFavoriteMovie,
     val getFavoriteMovies: GetFavoriteMovies,
+    val exportFavoritesToPdf: ExportFavoritesToPdf
 )

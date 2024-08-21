@@ -19,6 +19,7 @@ import com.emirkaya.movieapp.domain.repository.FavoriteMovieRepository
 import com.emirkaya.movieapp.domain.repository.MovieDetailRepository
 import com.emirkaya.movieapp.domain.repository.MovieRepository
 import com.emirkaya.movieapp.domain.usecase.favoriteusecases.AddFavoriteMovie
+import com.emirkaya.movieapp.domain.usecase.favoriteusecases.ExportFavoritesToPdf
 import com.emirkaya.movieapp.domain.usecase.favoriteusecases.FavoriteMovieUseCases
 import com.emirkaya.movieapp.domain.usecase.favoriteusecases.GetFavoriteMovie
 import com.emirkaya.movieapp.domain.usecase.favoriteusecases.GetFavoriteMovies
@@ -101,7 +102,8 @@ object AppModule {
             addFavoriteMovie = AddFavoriteMovie(repository),
             removeFavoriteMovie = RemoveFavoriteMovie(repository),
             getFavoriteMovie = GetFavoriteMovie(repository),
-            getFavoriteMovies = GetFavoriteMovies(repository)
+            getFavoriteMovies = GetFavoriteMovies(repository),
+            exportFavoritesToPdf = ExportFavoritesToPdf(repository)
         )
     }
 }

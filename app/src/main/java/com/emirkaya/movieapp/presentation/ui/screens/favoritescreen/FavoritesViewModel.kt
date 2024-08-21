@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.favoritescreen
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emirkaya.movieapp.domain.usecase.favoriteusecases.FavoriteMovieUseCases
@@ -27,6 +28,16 @@ class FavoritesViewModel @Inject constructor(
                 _uiState.value = FavoritesUiState(favoriteMovies = favorites, isLoading = false)
             } catch (e: Exception) {
                 _uiState.value = FavoritesUiState(error = e.message, isLoading = false)
+            }
+        }
+    }
+    fun exportFavoritesToPdf(context: Context, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val pdfFile = favoriteMovieUseCases.exportFavoritesToPdf.execute(context)
+                onSuccess()
+            } catch (e: Exception) {
+                // Hata
             }
         }
     }
