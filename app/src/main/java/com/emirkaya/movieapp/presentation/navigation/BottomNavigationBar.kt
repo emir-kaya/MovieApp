@@ -2,6 +2,7 @@ package com.emirkaya.movieapp.presentation.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -24,7 +25,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun BottomNavigationBar(navController: NavHostController, items: List<BottomNavItem>) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colorScheme.tertiary,
-        contentColor = Color.Black
+        contentColor = Color.Black,
+        modifier = Modifier.navigationBarsPadding()
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route

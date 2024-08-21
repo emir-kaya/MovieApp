@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Icon
@@ -35,8 +36,12 @@ fun SearchBar(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = SearchBarDimensions.paddingHorizontal, vertical = SearchBarDimensions.paddingVertical)
-            .background(Color.Transparent),
+            .padding(
+                horizontal = SearchBarDimensions.paddingHorizontal,
+                vertical = SearchBarDimensions.paddingVertical
+            )
+            .background(Color.Transparent)
+            .statusBarsPadding(),
         shape = CircleShape,
         elevation = SearchBarDimensions.elevation,
 
