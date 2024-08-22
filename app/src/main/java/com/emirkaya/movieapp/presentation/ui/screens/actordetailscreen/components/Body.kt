@@ -2,6 +2,7 @@ package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.componen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +36,6 @@ import com.emirkaya.movieapp.R
 import com.emirkaya.movieapp.data.model.actordetail.ActorDetailResponse
 import com.emirkaya.movieapp.data.model.moviecredit.Cast
 
-import com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.MovieCreditCard
 import com.emirkaya.movieapp.presentation.ui.theme.ActorDetailDimensions
 
 
@@ -44,39 +45,47 @@ fun Body(
     actorDetail: ActorDetailResponse,
     headerHeight: Dp,
     movieCredits: List<Cast>,
-    navController: NavHostController,
+    onMovieClick: (Int) -> Unit,
     isExpanded: Boolean,
     isBiographyLong: Boolean,
     onExpandToggle: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.verticalScroll(scrollState)
+        modifier = Modifier
+            .verticalScroll(scrollState)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Spacer(Modifier.height(headerHeight))
 
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = ActorDetailDimensions.cardPadding),
+                .padding(top = ActorDetailDimensions.cardPadding)
+                .background(MaterialTheme.colorScheme.background),
             shape = RoundedCornerShape(topStart = ActorDetailDimensions.cardCornerRadius, topEnd = ActorDetailDimensions.cardCornerRadius),
             elevation = ActorDetailDimensions.cardElevation
         ) {
-            Column(modifier = Modifier.padding(ActorDetailDimensions.cardPadding)) {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(ActorDetailDimensions.cardPadding))
+                     {
                 ActorDetailHeader(actorDetail)
                 Spacer(modifier = Modifier.height(ActorDetailDimensions.spacerHeightMedium))
 
                 Text(
                     text = "Biography",
                     fontSize = ActorDetailDimensions.fontSizeTitle,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.LightGray
                 )
 
                 Spacer(modifier = Modifier.height(ActorDetailDimensions.spacerHeightSmall))
 
                 Card(
                     shape = RoundedCornerShape(ActorDetailDimensions.cardCornerRadius),
-                    backgroundColor = Color.LightGray,
+                    backgroundColor = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateContentSize()
@@ -111,7 +120,7 @@ fun Body(
                     contentPadding = PaddingValues(horizontal = ActorDetailDimensions.horizontalPadding)
                 ) {
                     items(movieCredits) { movie ->
-                        MovieCreditCard(movie, navController)
+                        MovieCreditCard(movie, onClick = { onMovieClick(movie.id!!) })
                     }
                 }
             }

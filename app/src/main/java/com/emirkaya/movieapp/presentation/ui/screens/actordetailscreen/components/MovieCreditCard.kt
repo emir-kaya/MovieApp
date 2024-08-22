@@ -1,5 +1,4 @@
-package com.emirkaya.movieapp.presentation.ui.screens.moviedetailscreen
-
+package com.emirkaya.movieapp.presentation.ui.screens.actordetailscreen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,26 +22,28 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.emirkaya.movieapp.R
-import com.emirkaya.movieapp.data.model.moivedetailactors.CastActor
+import com.emirkaya.movieapp.data.model.moviecredit.Cast
 import com.emirkaya.movieapp.presentation.ui.theme.MovieCardDimensions
 import com.emirkaya.movieapp.util.Constants
 import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun MovieDetailActorCard(actor: CastActor, navController: NavHostController) {
+fun MovieCreditCard(movie: Cast, onClick: () -> Unit) {
+
     Card(
         shape = RoundedCornerShape(MovieCardDimensions.cardCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSecondary),
         modifier = Modifier
             .padding(MovieCardDimensions.cardPadding)
-            .width(MovieCardDimensions.cardWidth)
+            .width(180.dp)
             .height(MovieCardDimensions.cardHeight)
-            .clickable { navController.navigate("${Constants.ACTOR_DETAIL}/${actor.id}") }
+            .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(MovieCardDimensions.cardPadding)) {
             GlideImage(
-                imageModel = buildImageUrl(actor.profilePath),
+                imageModel = buildImageUrl(movie.posterPath),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -50,7 +52,7 @@ fun MovieDetailActorCard(actor: CastActor, navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightMedium))
             Text(
-                text = actor.name ?: stringResource(R.string.unknown),
+                text = movie.title ?: stringResource(R.string.unknown),
                 fontWeight = FontWeight.Bold,
                 fontSize = MovieCardDimensions.titleFontSize,
                 color = Color.Black,
@@ -58,17 +60,23 @@ fun MovieDetailActorCard(actor: CastActor, navController: NavHostController) {
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(MovieCardDimensions.horizontalPadding)
+                    .padding(horizontal = 4.dp)
             )
             Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightSmall))
             Text(
-                text = actor.character ?: stringResource(R.string.unknown),
+                text = movie.character ?: stringResource(R.string.unknown),
                 fontSize = MovieCardDimensions.subtitleFontSize,
                 color = Color.Gray
             )
             Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightSmall))
             Text(
-                text = actor.knownForDepartment ?: stringResource(R.string.unknown),
+                text = stringResource(R.string.rating, movie.voteAverage!!),
+                fontSize = MovieCardDimensions.subtitleFontSize,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightSmall))
+            Text(
+                text = stringResource(R.string.date, movie.releaseDate!!),
                 fontSize = MovieCardDimensions.subtitleFontSize,
                 color = Color.Gray
             )

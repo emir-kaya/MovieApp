@@ -1,5 +1,6 @@
 package com.emirkaya.movieapp.presentation.ui.screens.moviesscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,15 +29,16 @@ import com.emirkaya.movieapp.util.ImageUtil.buildImageUrl
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun MovieCard(movie: MovieItem, navController: NavHostController) {
+fun MovieCard(movie: MovieItem,  onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(MovieCardDimensions.cardCornerRadius),
         elevation = CardDefaults.cardElevation(defaultElevation = MovieCardDimensions.cardElevation),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSecondary),
         modifier = Modifier
             .padding(MovieCardDimensions.cardPadding)
             .fillMaxWidth()
             .height(MovieCardDimensions.cardHeight)
-            .clickable { navController.navigate("${Constants.MOVIE_DETAIL}/${movie.id}") }
+            .clickable { onClick() }
     ) {
         Column(modifier = Modifier.padding(MovieCardDimensions.cardPadding)) {
             GlideImage(
@@ -58,6 +61,7 @@ fun MovieCard(movie: MovieItem, navController: NavHostController) {
                 text = stringResource(R.string.rating, movie.voteAverage),
                 fontSize = MovieCardDimensions.subtitleFontSize,
                 color = Color.Gray
+
             )
             Spacer(modifier = Modifier.height(MovieCardDimensions.spacerHeightSmall))
             Text(
