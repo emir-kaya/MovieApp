@@ -33,7 +33,7 @@ Project aims to provide the movie and actor details to the user. User can search
 <table>
   <tr>
     <td>
-      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/Arch.PNG?ref_type=heads" alt="Açıklama" height="600" width="250">
+      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/Arch.PNG?ref_type=heads" alt="Açıklama" height="400" width="400">
     </td>
   </tr>
 </table>
@@ -55,7 +55,7 @@ Project aims to provide the movie and actor details to the user. User can search
  <table>
   <tr>
     <td>
-      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/archgraph.PNG?ref_type=heads" alt="Açıklama" height="600" width="250">
+      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/archgraph.PNG?ref_type=heads" alt="Açıklama" height="400" width="300">
     </td>
   </tr>
 </table>
