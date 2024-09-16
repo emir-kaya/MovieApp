@@ -1,11 +1,11 @@
 <h1 align="center">MovieApp</h1>
-
+<table>
   <tr>
     <td>
-      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/MovieDetailScreen.gif?ref_type=heads" alt="Açıklama" height="400" width="200">
+      <img src="https://github.com/emir-kaya/movieapp/blob/main/assets/MovieDetailScreen.gif" alt="Açıklama" height="400" width="200">
     </td>
     <td>
-      <img src="https://gitlab.com/emir-kaya/movieapp/-/raw/main/assets/ActorDetailScreen.gif?ref_type=heads" alt="Açıklama" height="400" width="200">
+      <img src="https://github.com/emir-kaya/movieapp/blob/main/assets/ActorDetailScreen.gif" alt="Açıklama" height="400" width="200">
     </td>
   </tr>
 </table>
